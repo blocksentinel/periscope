@@ -3,8 +3,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Cinder.Api.Infrastructure.Dtos;
 using Cinder.Api.Infrastructure.HttpResponses;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -12,11 +12,11 @@ namespace Cinder.Api.Infrastructure.Middleware
 {
     public class ErrorHandlingMiddleware
     {
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private readonly ILogger<ErrorHandlingMiddleware> _logger;
         private readonly RequestDelegate _next;
 
-        public ErrorHandlingMiddleware(RequestDelegate next, IHostingEnvironment env, ILogger<ErrorHandlingMiddleware> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next, IWebHostEnvironment env, ILogger<ErrorHandlingMiddleware> logger)
         {
             _next = next;
             _env = env;
@@ -47,16 +47,6 @@ namespace Cinder.Api.Infrastructure.Middleware
                 //    error = "There was an issue accessing the requested object.";
                 //    logError = "ResourceException exception caught";
                 //    break;
-                case DbUpdateConcurrencyException _:
-                    statusCode = HttpStatusCode.Conflict;
-                    error = "There was an issue saving changes to the object.";
-                    logError = "DbUpdateConcurrency exception caught";
-                    break;
-                case DbUpdateException _:
-                    statusCode = HttpStatusCode.BadRequest;
-                    error = "There was an issue saving changes to the object.";
-                    logError = "DbUpdate exception caught";
-                    break;
                 case InvalidOperationException _:
                     statusCode = HttpStatusCode.BadRequest;
                     logError = "Invalid operation exception caught";
