@@ -1,5 +1,4 @@
-﻿using System;
-using Nethereum.BlockchainProcessing.BlockStorage.Entities;
+﻿using Nethereum.BlockchainProcessing.BlockStorage.Entities;
 
 namespace Cinder.Documents
 {

@@ -29,6 +29,7 @@ namespace Cinder.Api.Infrastructure.Features.Stats
 
         public class Model
         {
+            public int Rank { get; set; }
             public string Hash { get; set; }
             public decimal Balance { get; set; }
         }
@@ -47,9 +48,10 @@ namespace Cinder.Api.Infrastructure.Features.Stats
                 IPage<CinderAddress> page = await _addressRepository.GetRichest(request.Page, request.Size, cancellationToken)
                     .ConfigureAwait(false);
 
+                int rank = 1 * ((page.Page - 1) * page.Size) + 1;
                 IEnumerable<Model> models = page.Items.Select(address => new Model
                 {
-                    Hash = address.Hash, Balance = address.Balance
+                    Rank = rank++, Hash = address.Hash, Balance = address.Balance
                 });
 
                 return new PagedEnumerable<Model>(models, page.Total, page.Page, page.Size);
