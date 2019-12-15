@@ -1,0 +1,61 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Cinder.Data.Repositories;
+using Cinder.Documents;
+using Cinder.Extensions;
+using FluentValidation;
+using MediatR;
+
+namespace Cinder.Api.Application.Features.Address
+{
+    public class GetAddressByHash
+    {
+        public class Validator : AbstractValidator<Query>
+        {
+            public Validator()
+            {
+                RuleFor(m => m.Hash).NotEmpty().Length(42);
+            }
+        }
+
+        public class Query : IRequest<Model>
+        {
+            public string Hash { get; set; }
+        }
+
+        public class Model
+        {
+            public string Hash { get; set; }
+            public decimal Balance { get; set; }
+            public ulong? BlocksMined { get; set; }
+            public ulong? TransactionCount { get; set; }
+            public ulong? Timestamp { get; set; }
+        }
+
+        public class Handler : IRequestHandler<Query, Model>
+        {
+            private readonly IAddressRepository _addressRepository;
+
+            public Handler(IAddressRepository addressRepository)
+            {
+                _addressRepository = addressRepository;
+            }
+
+            public async Task<Model> Handle(Query request, CancellationToken cancellationToken)
+            {
+                CinderAddress address = await _addressRepository.GetAddressByHash(request.Hash, cancellationToken).AnyContext();
+
+                return address != null
+                    ? new Model
+                    {
+                        Hash = address.Hash,
+                        Balance = address.Balance,
+                        BlocksMined = address.BlocksMined,
+                        TransactionCount = address.TransactionCount,
+                        Timestamp = address.Timestamp
+                    }
+                    : null;
+            }
+        }
+    }
+}

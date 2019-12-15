@@ -6,7 +6,8 @@ https://ellaism.io
 
 An indexer and API for the Ellaism blockchain.
 
- - [UI prototype using Blazor](https://github.com/majordutch/Cinder.UI.Blazor)
+ - [UI using Vue.js](https://github.com/ellaismproject/Cinder.UI.Vue)
+ - [UI prototype using Blazor](https://github.com/ellaismproject/Cinder.UI.Blazor)
 
 ## Thanks and Credits
 

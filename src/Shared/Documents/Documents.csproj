@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Cinder.Documents</AssemblyName>
+    <RootNamespace>Cinder.Documents</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nethereum.BlockchainProcessing" Version="3.4.0" />
+  </ItemGroup>
+
+</Project>
