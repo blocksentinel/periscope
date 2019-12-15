@@ -1,7 +1,5 @@
-﻿using Cinder.Extensions.Builder;
-using Cinder.Extensions.DependencyInjection;
+﻿using Cinder.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +17,6 @@ namespace Cinder.Api.Infrastructure
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
@@ -28,7 +25,6 @@ namespace Cinder.Api.Infrastructure
                 string[] origins = Configuration.GetSection("Cors:Origins").Get<string[]>();
                 options.AddDefaultPolicy(builder => builder.WithOrigins(origins).WithMethods("GET"));
             });
-            services.AddErrorHandling();
             services.AddOptions(Configuration);
             services.AddBlockchain();
             services.AddDatabase();
@@ -39,18 +35,12 @@ namespace Cinder.Api.Infrastructure
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddValidation();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseExceptionHandler("/Error");
             app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseCors();
-            app.UseErrorHandling();
             //app.UseMessaging();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
