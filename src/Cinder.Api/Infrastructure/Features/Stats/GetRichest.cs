@@ -48,7 +48,7 @@ namespace Cinder.Api.Infrastructure.Features.Stats
                 IPage<CinderAddress> page = await _addressRepository.GetRichest(request.Page, request.Size, cancellationToken)
                     .ConfigureAwait(false);
 
-                int rank = 1 * ((page.Page - 1) * page.Size) + 1;
+                int rank = 1 * (page.Page - 1) * page.Size + 1;
                 IEnumerable<Model> models = page.Items.Select(address => new Model
                 {
                     Rank = rank++, Hash = address.Hash, Balance = address.Balance

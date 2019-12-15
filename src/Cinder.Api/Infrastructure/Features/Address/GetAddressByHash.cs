@@ -48,7 +48,8 @@ namespace Cinder.Api.Infrastructure.Features.Address
 
             public async Task<Model> Handle(Query request, CancellationToken cancellationToken)
             {
-                CinderAddress address = await _addressRepository.GetAddressByHash(request.Hash, cancellationToken).ConfigureAwait(false);
+                CinderAddress address = await _addressRepository.GetAddressByHash(request.Hash, cancellationToken)
+                    .ConfigureAwait(false);
 
                 if (address != null)
                 {
@@ -68,7 +69,7 @@ namespace Cinder.Api.Infrastructure.Features.Address
                 {
                     Hash = hash,
                     Balance = UnitConversion.Convert.FromWei(balance),
-                    Timestamp = (ulong)DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                    Timestamp = (ulong) DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                     ForceRefresh = true
                 };
                 await _addressRepository.UpsertAddress(address, cancellationToken).ConfigureAwait(false);

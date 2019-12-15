@@ -13,7 +13,7 @@ namespace Cinder.Api.Infrastructure.Services
             {"0x3c4a268283b8c5508011d48dfe06d0c1568a7963", "Comining.io"},
             {"0x3af4d662b8a6a66340d09873c3e6bfc657a88bc4", "Myminers.org Solo"},
             {"0x168bedca940ff4a2c6bc80a4eec543724e08a176", "BaikalMine Solo"},
-            {"0xf35074bbd0a9aee46f4ea137971feec024ab704e", "SoloPool.org"},
+            {"0xf35074bbd0a9aee46f4ea137971feec024ab704e", "SoloPool.org"}
         };
 
         public string GetByAddressOrDefault(string hash)
