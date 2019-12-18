@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Documents;
 using Cinder.Extensions;
@@ -16,6 +17,14 @@ namespace Cinder.Data.Repositories
 
             return await Collection.Find(Builders<CinderMiner>.Filter.Eq(document => document.Hash, hash))
                 .SingleOrDefaultAsync(cancellationToken)
+                .AnyContext();
+        }
+
+        public async Task<IEnumerable<CinderMiner>> GetByAddresses(IEnumerable<string> hashes,
+            CancellationToken cancellationToken = default)
+        {
+            return await Collection.Find(Builders<CinderMiner>.Filter.In(document => document.Hash, hashes))
+                .ToListAsync(cancellationToken)
                 .AnyContext();
         }
     }
