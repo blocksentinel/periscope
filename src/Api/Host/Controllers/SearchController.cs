@@ -10,9 +10,9 @@ namespace Cinder.Api.Host.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(GetResultsByQuery.Model), StatusCodes.Status200OK)]
-        public async Task<GetResultsByQuery.Model> GetResultsByQuery(GetResultsByQuery.Query query)
+        public async Task<GetResultsByQuery.Model> GetResultsByQuery([FromQuery] string term)
         {
-            return await Mediator.Send(query).AnyContext();
+            return await Mediator.Send(new GetResultsByQuery.Query {Term = term}).AnyContext();
         }
     }
 }

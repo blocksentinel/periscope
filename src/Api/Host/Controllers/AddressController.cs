@@ -10,9 +10,10 @@ namespace Cinder.Api.Host.Controllers
     {
         [HttpGet("{hash}")]
         [ProducesResponseType(typeof(GetAddressByHash.Model), StatusCodes.Status200OK)]
-        public async Task<GetAddressByHash.Model> GetAddressByHash([FromQuery] GetAddressByHash.Query query)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<GetAddressByHash.Model> GetAddressByHash([FromRoute] string hash)
         {
-            return await Mediator.Send(query).AnyContext();
+            return await Mediator.Send(new GetAddressByHash.Query {Hash = hash}).AnyContext();
         }
     }
 }

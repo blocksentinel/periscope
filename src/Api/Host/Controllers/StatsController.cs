@@ -11,9 +11,9 @@ namespace Cinder.Api.Host.Controllers
     {
         [HttpGet("richest")]
         [ProducesResponseType(typeof(GetRichest.Model), StatusCodes.Status200OK)]
-        public async Task<IPage<GetRichest.Model>> GetRichest(GetRichest.Query query)
+        public async Task<IPage<GetRichest.Model>> GetRichest([FromQuery] int? page, [FromQuery] int? size)
         {
-            return await Mediator.Send(query).AnyContext();
+            return await Mediator.Send(new GetRichest.Query {Page = page, Size = size}).AnyContext();
         }
     }
 }
