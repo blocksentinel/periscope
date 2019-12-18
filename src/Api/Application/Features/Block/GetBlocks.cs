@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Core.Paging;
@@ -65,33 +66,29 @@ namespace Cinder.Api.Application.Features.Block
                 IPage<CinderBlock> page = await _blockRepository
                     .GetBlocks(request.Page, request.Size, request.Sort, cancellationToken)
                     .AnyContext();
-
-                List<Model> models = new List<Model>();
-                foreach (CinderBlock block in page.Items)
+                IEnumerable<CinderMiner> miners = await _minerRepository
+                    .GetByAddresses(page.Items.Select(block => block.Miner).Distinct(), cancellationToken)
+                    .AnyContext();
+                IEnumerable<Model> models = page.Items.Select(block => new Model
                 {
-                    CinderMiner miner = await _minerRepository.GetByAddressOrDefault(block.Miner, cancellationToken).AnyContext();
-
-                    models.Add(new Model
-                    {
-                        BlockNumber = block.BlockNumber,
-                        Difficulty = block.Difficulty,
-                        ExtraData = block.ExtraData,
-                        GasLimit = ulong.Parse(block.GasLimit),
-                        GasUsed = ulong.Parse(block.GasUsed),
-                        Hash = block.Hash,
-                        Miner = block.Miner,
-                        MinerDisplay = miner?.Name,
-                        Nonce = block.Nonce,
-                        ParentHash = block.ParentHash,
-                        Size = ulong.Parse(block.Size),
-                        Timestamp = ulong.Parse(block.Timestamp),
-                        TransactionCount = (ulong) block.TransactionCount,
-                        TotalDifficulty = block.TotalDifficulty,
-                        Uncles = block.Uncles,
-                        UncleCount = (ulong) block.UncleCount,
-                        Sha3Uncles = block.Sha3Uncles
-                    });
-                }
+                    BlockNumber = block.BlockNumber,
+                    Difficulty = block.Difficulty,
+                    ExtraData = block.ExtraData,
+                    GasLimit = ulong.Parse(block.GasLimit),
+                    GasUsed = ulong.Parse(block.GasUsed),
+                    Hash = block.Hash,
+                    Miner = block.Miner,
+                    MinerDisplay = miners.FirstOrDefault(miner => miner.Hash == block.Miner)?.Name,
+                    Nonce = block.Nonce,
+                    ParentHash = block.ParentHash,
+                    Size = ulong.Parse(block.Size),
+                    Timestamp = ulong.Parse(block.Timestamp),
+                    TransactionCount = (ulong) block.TransactionCount,
+                    TotalDifficulty = block.TotalDifficulty,
+                    Uncles = block.Uncles,
+                    UncleCount = (ulong) block.UncleCount,
+                    Sha3Uncles = block.Sha3Uncles
+                });
 
                 return new PagedEnumerable<Model>(models, page.Total, page.Page, page.Size);
             }
