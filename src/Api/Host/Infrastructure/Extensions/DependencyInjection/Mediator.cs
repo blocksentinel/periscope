@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using Cinder.Api.Application;
 using Cinder.Api.Application.Behaviors;
 using MediatR;
 using MediatR.Pipeline;
@@ -15,8 +15,7 @@ namespace Cinder.Extensions.DependencyInjection
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            services.AddMediatR(assembly);
+            services.AddMediatR(typeof(ApplicationModule));
         }
     }
 }
