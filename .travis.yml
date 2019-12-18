@@ -1,0 +1,7 @@
+language: csharp
+dist: bionic
+mono: none
+dotnet: 3.1
+solution: Cinder.sln
+script:
+  - dotnet restore
