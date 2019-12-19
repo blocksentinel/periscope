@@ -1,10 +1,9 @@
 # Cinder
 
-https://ellaism.io
+![GitHub](https://img.shields.io/github/license/ellaismproject/Cinder)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ellaismproject/Cinder/Build%20and%20Test)
 
-## What is Cinder?
-
-An indexer and API for the Ellaism blockchain.
+Cinder is an indexer and API for the Ellaism blockchain.
 
  - [UI using Vue.js](https://github.com/ellaismproject/Cinder.UI.Vue)
  - [UI prototype using Blazor](https://github.com/ellaismproject/Cinder.UI.Blazor)
