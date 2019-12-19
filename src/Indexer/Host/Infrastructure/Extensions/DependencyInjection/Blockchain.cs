@@ -18,6 +18,7 @@ namespace Cinder.Extensions.DependencyInjection
                 return new Web3Parity(options.Value.Node.RpcUrl);
             });
             services.AddSingleton<IBlockIndexerRunner, BlockIndexerRunner>();
+            services.AddSingleton<IAddressIndexerRunner, AddressIndexerRunner>();
             services.AddSingleton<IAddressRefresherRunner, AddressRefresherRunner>();
             services.AddSingleton<CinderBlockStorageStepHandler>();
             services.AddSingleton<CinderContractCreationStorageStepHandler>();
