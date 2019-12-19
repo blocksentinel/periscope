@@ -24,5 +24,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
     - name: Test with dotnet
       run: dotnet test --configuration Release --list-tests
