@@ -59,6 +59,11 @@ namespace Cinder.Indexer.Host.Infrastructure
                     updated.Add(address);
                 }
 
+                if (!updated.Any())
+                {
+                    return;
+                }
+
                 await _addressRepository.BulkUpsertAddresses(updated, cancellationToken).AnyContext();
             }
             catch (Exception e)
