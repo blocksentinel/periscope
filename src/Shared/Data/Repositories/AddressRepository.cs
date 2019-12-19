@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cinder.Core.Exceptions;
 using Cinder.Core.Paging;
 using Cinder.Documents;
 using Cinder.Extensions;
@@ -13,6 +15,30 @@ namespace Cinder.Data.Repositories
     {
         public AddressRepository(IMongoClient client, string databaseName) : base(client, databaseName,
             CollectionName.Addresses) { }
+
+        public async Task BulkInsertAddressesIfNotExists(IEnumerable<CinderAddress> addresses,
+            CancellationToken cancellationToken = default)
+        {
+            List<WriteModel<CinderAddress>> requests = addresses.Select(document => new InsertOneModel<CinderAddress>(document))
+                .Cast<WriteModel<CinderAddress>>()
+                .ToList();
+
+            // TODO 20191218 RJ This probably can be handled better
+            try
+            {
+                await Collection.BulkWriteAsync(requests, new BulkWriteOptions {IsOrdered = false}, cancellationToken)
+                    .AnyContext();
+            }
+            catch (MongoBulkWriteException e)
+            {
+                if (e.WriteErrors.Any(error => error.Category != ServerErrorCategory.DuplicateKey))
+                {
+                    throw;
+                }
+
+                throw new LoggedException(e);
+            }
+        }
 
         public async Task UpsertAddress(CinderAddress address, CancellationToken cancellationToken = default)
         {
