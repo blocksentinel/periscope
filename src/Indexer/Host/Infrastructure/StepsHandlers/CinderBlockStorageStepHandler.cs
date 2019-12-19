@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Cinder.Data.Repositories;
 using Cinder.Events;
 using Cinder.Extensions;
@@ -26,7 +28,12 @@ namespace Cinder.Indexer.Host.Infrastructure.StepsHandlers
         {
             _logger.LogInformation("Processing block {Block}", value.Number.ToUlong());
             await base.ExecuteInternalAsync(value).AnyContext();
-            await _bus.PublishAsync(BlockFoundEvent.Create(value.Number.ToUlong())).AnyContext();
+
+            List<string> addresses = new List<string> {value.Miner};
+            addresses.AddRange(value.Transactions.Select(transaction => transaction.From));
+            addresses.AddRange(value.Transactions.Select(transaction => transaction.To));
+
+            await _bus.PublishAsync(AddressesTransactedEvent.Create(addresses.Distinct().ToArray())).AnyContext();
         }
     }
 }
