@@ -1,4 +1,4 @@
-# ![Ellaism](docs/logo.png) Cinder
+# ![Ellaism](doc/logo.png) Cinder
 
 An indexer and API for the Ellaism blockchain.
 
