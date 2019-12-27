@@ -1,6 +1,6 @@
 ﻿namespace Cinder.Documents
 {
-    public class CinderMiner : IDocument
+    public class CinderAddressMeta : IDocument
     {
         private string _id;
 

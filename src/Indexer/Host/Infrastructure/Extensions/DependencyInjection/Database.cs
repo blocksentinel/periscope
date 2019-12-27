@@ -33,8 +33,8 @@ namespace Cinder.Extensions.DependencyInjection
                 sp.GetService<IIndexerRepositoryFactory>().CreateRepository<TransactionRepository>());
             services.AddSingleton<IBlockProgressRepository>(sp =>
                 sp.GetService<IIndexerRepositoryFactory>().CreateRepository<BlockProgressRepository>());
-            services.AddSingleton<IMinerRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<MinerRepository>());
+            services.AddSingleton<IAddressMetaRepository>(sp =>
+                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<AddressMetaRepository>());
         }
     }
 }

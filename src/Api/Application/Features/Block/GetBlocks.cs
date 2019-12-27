@@ -52,13 +52,13 @@ namespace Cinder.Api.Application.Features.Block
 
         public class Handler : IRequestHandler<Query, IPage<Model>>
         {
+            private readonly IAddressMetaRepository _addressMetaRepository;
             private readonly IBlockRepository _blockRepository;
-            private readonly IMinerRepository _minerRepository;
 
-            public Handler(IBlockRepository blockRepository, IMinerRepository minerRepository)
+            public Handler(IBlockRepository blockRepository, IAddressMetaRepository addressMetaRepository)
             {
                 _blockRepository = blockRepository;
-                _minerRepository = minerRepository;
+                _addressMetaRepository = addressMetaRepository;
             }
 
             public async Task<IPage<Model>> Handle(Query request, CancellationToken cancellationToken)
@@ -66,7 +66,7 @@ namespace Cinder.Api.Application.Features.Block
                 IPage<CinderBlock> page = await _blockRepository
                     .GetBlocks(request.Page, request.Size, request.Sort, cancellationToken)
                     .AnyContext();
-                IEnumerable<CinderMiner> miners = await _minerRepository
+                IEnumerable<CinderAddressMeta> metas = await _addressMetaRepository
                     .GetByAddresses(page.Items.Select(block => block.Miner).Distinct(), cancellationToken)
                     .AnyContext();
                 IEnumerable<Model> models = page.Items.Select(block => new Model
@@ -78,7 +78,7 @@ namespace Cinder.Api.Application.Features.Block
                     GasUsed = ulong.Parse(block.GasUsed),
                     Hash = block.Hash,
                     Miner = block.Miner,
-                    MinerDisplay = miners.FirstOrDefault(miner => miner.Hash == block.Miner)?.Name,
+                    MinerDisplay = metas.FirstOrDefault(miner => miner.Hash == block.Miner)?.Name,
                     Nonce = block.Nonce,
                     ParentHash = block.ParentHash,
                     Size = ulong.Parse(block.Size),

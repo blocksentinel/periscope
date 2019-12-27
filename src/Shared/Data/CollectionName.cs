@@ -9,6 +9,6 @@
         TransactionLogs,
         Contracts,
         BlockProgress,
-        Miner
+        AddressMeta
     }
 }

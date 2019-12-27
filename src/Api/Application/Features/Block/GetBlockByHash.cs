@@ -46,13 +46,13 @@ namespace Cinder.Api.Application.Features.Block
 
         public class Handler : IRequestHandler<Query, Model>
         {
+            private readonly IAddressMetaRepository _addressMetaRepository;
             private readonly IBlockRepository _blockRepository;
-            private readonly IMinerRepository _minerRepository;
 
-            public Handler(IBlockRepository blockRepository, IMinerRepository minerRepository)
+            public Handler(IBlockRepository blockRepository, IAddressMetaRepository addressMetaRepository)
             {
                 _blockRepository = blockRepository;
-                _minerRepository = minerRepository;
+                _addressMetaRepository = addressMetaRepository;
             }
 
             public async Task<Model> Handle(Query request, CancellationToken cancellationToken)
@@ -64,7 +64,8 @@ namespace Cinder.Api.Application.Features.Block
                     return null;
                 }
 
-                CinderMiner miner = await _minerRepository.GetByAddressOrDefault(block.Miner, cancellationToken).AnyContext();
+                CinderAddressMeta meta = await _addressMetaRepository.GetByAddressOrDefault(block.Miner, cancellationToken)
+                    .AnyContext();
 
                 return new Model
                 {
@@ -75,7 +76,7 @@ namespace Cinder.Api.Application.Features.Block
                     GasUsed = ulong.Parse(block.GasUsed),
                     Hash = block.Hash,
                     Miner = block.Miner,
-                    MinerDisplay = miner?.Name,
+                    MinerDisplay = meta?.Name,
                     Nonce = block.Nonce,
                     ParentHash = block.ParentHash,
                     Size = ulong.Parse(block.Size),

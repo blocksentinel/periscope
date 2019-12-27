@@ -55,8 +55,8 @@ namespace Cinder.Data
                 case var t when t == typeof(TransactionRepository):
                     repository = new TransactionRepository(Client, DatabaseName);
                     break;
-                case var t when t == typeof(MinerRepository):
-                    repository = new MinerRepository(Client, DatabaseName);
+                case var t when t == typeof(AddressMetaRepository):
+                    repository = new AddressMetaRepository(Client, DatabaseName);
                     break;
                 default:
                     throw new NotImplementedException($"Repository not implemented for type {typeof(TRepository).Name}");
@@ -93,7 +93,7 @@ namespace Cinder.Data
                 map.SetIsRootClass(true);
             });
             BsonClassMap.RegisterClassMap<CinderBlockProgress>();
-            BsonClassMap.RegisterClassMap<CinderMiner>();
+            BsonClassMap.RegisterClassMap<CinderAddressMeta>();
         }
     }
 }
