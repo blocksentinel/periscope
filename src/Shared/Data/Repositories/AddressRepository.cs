@@ -7,6 +7,7 @@ using Cinder.Core.Exceptions;
 using Cinder.Core.Paging;
 using Cinder.Documents;
 using Cinder.Extensions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Cinder.Data.Repositories
@@ -122,11 +123,13 @@ namespace Cinder.Data.Repositories
         public async Task<decimal> GetSupply(CancellationToken cancellationToken = default)
         {
             // TODO 20191226 RJ This needs to be calculated/retreived in a different way, it is currently inefficient
-            var result = await Collection.Aggregate()
-                .Group(address => address.Temp, group => new {Balance = group.Sum(y => y.Balance)})
-                .ToListAsync(cancellationToken);
+            List<BsonDocument> result = await Collection.Aggregate()
+                .AppendStage(new BsonDocumentPipelineStageDefinition<CinderAddress, BsonDocument>(new BsonDocument("$group",
+                    new BsonDocument {{"_id", BsonNull.Value}, {"Supply", new BsonDocument("$sum", "$Balance")}})))
+                .ToListAsync(cancellationToken)
+                .AnyContext();
 
-            return result.FirstOrDefault()?.Balance ?? 0;
+            return result.FirstOrDefault()?["Supply"].AsDecimal ?? 0;
         }
     }
 }
