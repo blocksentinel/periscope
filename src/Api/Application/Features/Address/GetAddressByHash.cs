@@ -26,6 +26,8 @@ namespace Cinder.Api.Application.Features.Address
         public class Model
         {
             public string Hash { get; set; }
+            public string Name { get; set; }
+            public string Website { get; set; }
             public decimal Balance { get; set; }
             public ulong? BlocksMined { get; set; }
             public ulong? TransactionCount { get; set; }
@@ -34,27 +36,37 @@ namespace Cinder.Api.Application.Features.Address
 
         public class Handler : IRequestHandler<Query, Model>
         {
+            private readonly IAddressMetaRepository _addressMetaRepository;
             private readonly IAddressRepository _addressRepository;
 
-            public Handler(IAddressRepository addressRepository)
+            public Handler(IAddressRepository addressRepository, IAddressMetaRepository addressMetaRepository)
             {
                 _addressRepository = addressRepository;
+                _addressMetaRepository = addressMetaRepository;
             }
 
             public async Task<Model> Handle(Query request, CancellationToken cancellationToken)
             {
                 CinderAddress address = await _addressRepository.GetAddressByHash(request.Hash, cancellationToken).AnyContext();
 
-                return address != null
-                    ? new Model
-                    {
-                        Hash = address.Hash,
-                        Balance = address.Balance,
-                        BlocksMined = address.BlocksMined,
-                        TransactionCount = address.TransactionCount,
-                        Timestamp = address.Timestamp
-                    }
-                    : null;
+                if (address == null)
+                {
+                    return null;
+                }
+
+                CinderAddressMeta meta = await _addressMetaRepository.GetByAddressOrDefault(address.Hash, cancellationToken)
+                    .AnyContext();
+
+                return new Model
+                {
+                    Hash = address.Hash,
+                    Name = meta?.Name,
+                    Website = meta?.Website,
+                    Balance = address.Balance,
+                    BlocksMined = address.BlocksMined,
+                    TransactionCount = address.TransactionCount,
+                    Timestamp = address.Timestamp
+                };
             }
         }
     }
