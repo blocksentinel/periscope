@@ -18,5 +18,6 @@ namespace Cinder.Data.Repositories
             CancellationToken cancellationToken = default);
 
         Task<IPage<CinderAddress>> GetRichest(int? page, int? size, CancellationToken cancellationToken = default);
+        Task<decimal> GetSupply(CancellationToken cancellationToken = default);
     }
 }

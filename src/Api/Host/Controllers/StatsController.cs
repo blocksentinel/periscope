@@ -15,5 +15,12 @@ namespace Cinder.Api.Host.Controllers
         {
             return await Mediator.Send(new GetRichest.Query {Page = page, Size = size}).AnyContext();
         }
+
+        [HttpGet("supply")]
+        [ProducesResponseType(typeof(GetSupply.Model), StatusCodes.Status200OK)]
+        public async Task<GetSupply.Model> GetSupply()
+        {
+            return await Mediator.Send(new GetSupply.Query()).AnyContext();
+        }
     }
 }
