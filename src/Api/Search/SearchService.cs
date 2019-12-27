@@ -28,8 +28,13 @@ namespace Cinder.Api.Search
             {
                 query = query.StartsWith("0x") ? query : $"0x{query}";
 
-                // todo
-                searchResult.Id = query.ToLowerInvariant();
+                string result = await _addressRepository.GetAddressHashIfExists(query).AnyContext();
+                if (string.IsNullOrEmpty(result))
+                {
+                    return searchResult;
+                }
+
+                searchResult.Id = result;
                 searchResult.Type = SearchResultType.AddressHash;
             }
             else if (Regex.IsMatch(query, "^(0x)?[0-9a-f]{64}$", RegexOptions.IgnoreCase))

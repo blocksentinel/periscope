@@ -12,6 +12,7 @@ namespace Cinder.Data.Repositories
         Task UpsertAddress(CinderAddress address, CancellationToken cancellationToken = default);
         Task BulkUpsertAddresses(IEnumerable<CinderAddress> addresses, CancellationToken cancellationToken = default);
         Task<CinderAddress> GetAddressByHash(string hash, CancellationToken cancellationToken = default);
+        Task<string> GetAddressHashIfExists(string hash, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<CinderAddress>> GetStaleAddresses(int age = 5, int limit = 1000,
             CancellationToken cancellationToken = default);
