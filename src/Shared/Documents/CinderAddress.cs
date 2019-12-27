@@ -12,6 +12,7 @@ namespace Cinder.Documents
         public ulong? TransactionCount { get; set; }
         public ulong? Timestamp { get; set; }
         public bool ForceRefresh { get; set; }
+        public string Temp { get; set; }
 
         public string Id
         {
