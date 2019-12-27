@@ -31,28 +31,36 @@ namespace Cinder.Api.Application.Features.Stats
         public class Model
         {
             public int Rank { get; set; }
+            public string Name { get; set; }
             public string Hash { get; set; }
             public decimal Balance { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, IPage<Model>>
         {
+            private readonly IAddressMetaRepository _addressMetaRepository;
             private readonly IAddressRepository _addressRepository;
 
-            public Handler(IAddressRepository addressRepository)
+            public Handler(IAddressRepository addressRepository, IAddressMetaRepository addressMetaRepository)
             {
                 _addressRepository = addressRepository;
+                _addressMetaRepository = addressMetaRepository;
             }
 
             public async Task<IPage<Model>> Handle(Query request, CancellationToken cancellationToken)
             {
                 IPage<CinderAddress> page = await _addressRepository.GetRichest(request.Page, request.Size, cancellationToken)
                     .AnyContext();
+                IEnumerable<CinderAddressMeta> metas = await _addressMetaRepository
+                    .GetByAddresses(page.Items.Select(address => address.Hash).Distinct(), cancellationToken)
+                    .AnyContext();
 
                 int rank = 1 * (page.Page - 1) * page.Size + 1;
-                IEnumerable<Model> models = page.Items.Select(address => new Model
+                IEnumerable<Model> models = page.Items.Select(address =>
                 {
-                    Rank = rank++, Hash = address.Hash, Balance = address.Balance
+                    CinderAddressMeta meta = metas.FirstOrDefault(x => x.Id == address.Id);
+
+                    return new Model {Rank = rank++, Name = meta?.Name, Hash = address.Hash, Balance = address.Balance};
                 });
 
                 return new PagedEnumerable<Model>(models, page.Total, page.Page, page.Size);
