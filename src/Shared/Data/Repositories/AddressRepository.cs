@@ -59,6 +59,17 @@ namespace Cinder.Data.Repositories
                 .AnyContext();
         }
 
+        public async Task<string> GetAddressHashIfExists(string hash, CancellationToken cancellationToken = default)
+        {
+            hash = hash.ToLowerInvariant();
+            var result = await Collection.Find(Builders<CinderAddress>.Filter.Eq(document => document.Hash, hash))
+                .Project(address => new {address.Hash})
+                .SingleOrDefaultAsync(cancellationToken)
+                .AnyContext();
+
+            return result?.Hash;
+        }
+
         public async Task<IEnumerable<CinderAddress>> GetStaleAddresses(int age = 5, int limit = 1000,
             CancellationToken cancellationToken = default)
         {
