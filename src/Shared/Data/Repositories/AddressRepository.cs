@@ -118,5 +118,15 @@ namespace Cinder.Data.Repositories
 
             return new PagedEnumerable<CinderAddress>(addresses, 1000, page ?? 1, size ?? 10);
         }
+
+        public async Task<decimal> GetSupply(CancellationToken cancellationToken = default)
+        {
+            // TODO 20191226 RJ This needs to be calculated/retreived in a different way, it is currently inefficient
+            var result = await Collection.Aggregate()
+                .Group(address => address.Temp, group => new {Balance = group.Sum(y => y.Balance)})
+                .ToListAsync(cancellationToken);
+
+            return result.FirstOrDefault()?.Balance ?? 0;
+        }
     }
 }
