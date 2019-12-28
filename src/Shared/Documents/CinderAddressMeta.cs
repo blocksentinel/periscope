@@ -1,4 +1,6 @@
-﻿namespace Cinder.Documents
+﻿using System.Collections.Generic;
+
+namespace Cinder.Documents
 {
     public class CinderAddressMeta : IDocument
     {
@@ -7,6 +9,7 @@
         public string Hash { get; set; }
         public string Name { get; set; }
         public string Website { get; set; }
+        public ICollection<string> Tags { get; set; } = new List<string>();
 
         public string Id
         {
