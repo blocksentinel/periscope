@@ -34,6 +34,7 @@ namespace Cinder.Api.Application.Features.Stats
             public string Name { get; set; }
             public string Hash { get; set; }
             public decimal Balance { get; set; }
+            public ICollection<string> Tags { get; set; } = new List<string>();
         }
 
         public class Handler : IRequestHandler<Query, IPage<Model>>
@@ -60,7 +61,14 @@ namespace Cinder.Api.Application.Features.Stats
                 {
                     CinderAddressMeta meta = metas.FirstOrDefault(x => x.Id == address.Id);
 
-                    return new Model {Rank = rank++, Name = meta?.Name, Hash = address.Hash, Balance = address.Balance};
+                    return new Model
+                    {
+                        Rank = rank++,
+                        Name = meta?.Name,
+                        Hash = address.Hash,
+                        Balance = address.Balance,
+                        Tags = meta?.Tags ?? new List<string>()
+                    };
                 });
 
                 return new PagedEnumerable<Model>(models, page.Total, page.Page, page.Size);

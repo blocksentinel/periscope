@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Data.Repositories;
 using Cinder.Documents;
@@ -32,6 +33,7 @@ namespace Cinder.Api.Application.Features.Address
             public ulong? BlocksMined { get; set; }
             public ulong? TransactionCount { get; set; }
             public ulong? Timestamp { get; set; }
+            public ICollection<string> Tags { get; set; } = new List<string>();
         }
 
         public class Handler : IRequestHandler<Query, Model>
@@ -65,7 +67,8 @@ namespace Cinder.Api.Application.Features.Address
                     Balance = address.Balance,
                     BlocksMined = address.BlocksMined,
                     TransactionCount = address.TransactionCount,
-                    Timestamp = address.Timestamp
+                    Timestamp = address.Timestamp,
+                    Tags = meta?.Tags ?? new List<string>()
                 };
             }
         }
