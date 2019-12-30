@@ -56,10 +56,10 @@ namespace Cinder.Api.Application.Features.Transaction
         public class Handler : IRequestHandler<Query, IPage<Model>>
         {
             private readonly IAddressTransactionRepository _addressTransactionRepository;
-            private readonly TransactionRepository _transactionRepository;
+            private readonly ITransactionRepository _transactionRepository;
 
             public Handler(IAddressTransactionRepository addressTransactionRepository,
-                TransactionRepository transactionRepository)
+                ITransactionRepository transactionRepository)
             {
                 _addressTransactionRepository = addressTransactionRepository;
                 _transactionRepository = transactionRepository;
