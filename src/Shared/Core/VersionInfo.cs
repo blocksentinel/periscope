@@ -5,7 +5,7 @@ namespace Cinder.Core
 {
     public static class VersionInfo
     {
-        public const string Version = "1.5.193562";
+        public const string Version = "1.5.193631";
         public static DateTime BuildDate => new FileInfo(typeof(VersionInfo).Assembly.Location).LastWriteTime;
     }
 }
