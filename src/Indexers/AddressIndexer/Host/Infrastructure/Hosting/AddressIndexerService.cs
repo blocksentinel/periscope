@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cinder.Core.Exceptions;
 using Cinder.Data.Repositories;
 using Cinder.Documents;
 using Cinder.Events;
@@ -54,7 +55,15 @@ namespace Cinder.Indexers.AddressIndexer.Host.Infrastructure.Hosting
 
                 if (addresses.Any())
                 {
-                    await _addressRepository.BulkInsertAddressesIfNotExists(addresses, stoppingToken).AnyContext();
+                    try
+                    {
+                        await _addressRepository.BulkInsertAddressesIfNotExists(addresses, stoppingToken).AnyContext();
+                    }
+                    catch (LoggedException)
+                    {
+                        // If a bulk write error occurs, the method throws a LoggedException
+                        // We can ignore this for now
+                    }
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(15), stoppingToken).AnyContext();
