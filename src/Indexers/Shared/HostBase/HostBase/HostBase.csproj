@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundatio" Version="8.1.2126" />
+    <PackageReference Include="Foundatio.RabbitMQ" Version="8.1.1527" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
     <PackageReference Include="Nethereum.Parity" Version="3.4.0" />
