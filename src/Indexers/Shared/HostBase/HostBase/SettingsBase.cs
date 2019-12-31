@@ -6,6 +6,7 @@ namespace Cinder.Indexers.HostBase
     {
         public DatabaseSettings Database { get; set; } = new DatabaseSettings();
         public NodeSettings Node { get; set; } = new NodeSettings();
+        public BusSettings Bus { get; set; } = new BusSettings();
 
         public class DatabaseSettings : IDatabaseSettings
         {
@@ -17,6 +18,12 @@ namespace Cinder.Indexers.HostBase
         public class NodeSettings
         {
             public string RpcUrl { get; set; }
+        }
+
+        public class BusSettings
+        {
+            public string ConnectionString { get; set; }
+            public string QueueName { get; set; }
         }
     }
 }
