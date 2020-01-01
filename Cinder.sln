@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{6364676A-C88
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Api\Application\Application.csproj", "{6F9A6777-6975-4C4F-8BFB-4A285B14224C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Indexers", "Indexers", "{5B2F61D1-8210-4150-BEA1-7962533F6D2C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Indexing", "Indexing", "{5B2F61D1-8210-4150-BEA1-7962533F6D2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Indexers\BlockIndexer\Host\Host.csproj", "{9F204F17-218D-4505-B70A-06298F683AF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Indexing\BlockIndexer\Host\Host.csproj", "{9F204F17-218D-4505-B70A-06298F683AF1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{83EE16C6-077E-427B-B56D-B6E92305C489}"
 EndProject
@@ -29,17 +29,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Search", "src\Api\Search\Se
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlockIndexer", "BlockIndexer", "{145E8210-2743-4803-B216-AAF6C2572AF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Indexers\AddressIndexer\Host\Host.csproj", "{AB76F2BD-9C2A-4D6A-AD39-4C742CD60B3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Indexing\AddressIndexer\Host\Host.csproj", "{AB76F2BD-9C2A-4D6A-AD39-4C742CD60B3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AddressIndexer", "AddressIndexer", "{E5B1DEF7-9C69-4179-9E56-ED072955FE2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatsIndexer", "StatsIndexer", "{FD854B5C-A28F-4CC7-9DC1-669A7484754C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Indexers\StatsIndexer\Host\Host.csproj", "{489B4E33-73D8-4CC2-9367-89DE5990E69C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Indexing\StatsIndexer\Host\Host.csproj", "{489B4E33-73D8-4CC2-9367-89DE5990E69C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6BC991C3-06FB-43DF-97FD-0F6D7E248FED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostBase", "src\Indexers\Shared\HostBase\HostBase\HostBase.csproj", "{15276B8A-1D05-4AD1-A054-E0BF4C6707DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostBase", "src\Indexing\Shared\HostBase\HostBase\HostBase.csproj", "{15276B8A-1D05-4AD1-A054-E0BF4C6707DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stats", "src\Shared\Stats\Stats.csproj", "{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +185,18 @@ Global
 		{15276B8A-1D05-4AD1-A054-E0BF4C6707DE}.Release|x64.Build.0 = Release|Any CPU
 		{15276B8A-1D05-4AD1-A054-E0BF4C6707DE}.Release|x86.ActiveCfg = Release|Any CPU
 		{15276B8A-1D05-4AD1-A054-E0BF4C6707DE}.Release|x86.Build.0 = Release|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Release|x64.Build.0 = Release|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,6 +220,7 @@ Global
 		{489B4E33-73D8-4CC2-9367-89DE5990E69C} = {FD854B5C-A28F-4CC7-9DC1-669A7484754C}
 		{6BC991C3-06FB-43DF-97FD-0F6D7E248FED} = {5B2F61D1-8210-4150-BEA1-7962533F6D2C}
 		{15276B8A-1D05-4AD1-A054-E0BF4C6707DE} = {6BC991C3-06FB-43DF-97FD-0F6D7E248FED}
+		{DEA58C17-85BC-4937-8F0A-94F583FCC7DE} = {83EE16C6-077E-427B-B56D-B6E92305C489}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8C3070B-22C5-4AD6-AE66-DC081781EDCD}

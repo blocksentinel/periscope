@@ -1,4 +1,5 @@
-﻿using Nethereum.BlockchainProcessing.BlockStorage.Entities;
+﻿using System.Collections.Generic;
+using Nethereum.BlockchainProcessing.BlockStorage.Entities;
 
 namespace Cinder.Documents
 {
@@ -12,6 +13,7 @@ namespace Cinder.Documents
         public ulong? TransactionCount { get; set; }
         public ulong? Timestamp { get; set; }
         public bool ForceRefresh { get; set; }
+        public IDictionary<string, decimal> BalanceHistory { get; set; } = new Dictionary<string, decimal>();
 
         public string Id
         {
