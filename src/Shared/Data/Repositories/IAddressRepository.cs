@@ -8,7 +8,6 @@ namespace Cinder.Data.Repositories
 {
     public interface IAddressRepository : IRepository
     {
-        Task BulkInsertAddressesIfNotExists(IEnumerable<CinderAddress> addresses, CancellationToken cancellationToken = default);
         Task UpsertAddress(CinderAddress address, CancellationToken cancellationToken = default);
         Task BulkUpsertAddresses(IEnumerable<CinderAddress> addresses, CancellationToken cancellationToken = default);
         Task<CinderAddress> GetAddressByHash(string hash, CancellationToken cancellationToken = default);
@@ -19,5 +18,6 @@ namespace Cinder.Data.Repositories
 
         Task<IPage<CinderAddress>> GetRichest(int? page, int? size, CancellationToken cancellationToken = default);
         Task<decimal> GetSupply(CancellationToken cancellationToken = default);
+        Task<bool> AddressExists(string hash, CancellationToken cancellationToken = default);
     }
 }

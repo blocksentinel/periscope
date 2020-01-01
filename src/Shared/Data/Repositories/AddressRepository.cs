@@ -17,30 +17,6 @@ namespace Cinder.Data.Repositories
         public AddressRepository(IMongoClient client, string databaseName) : base(client, databaseName,
             CollectionName.Addresses) { }
 
-        public async Task BulkInsertAddressesIfNotExists(IEnumerable<CinderAddress> addresses,
-            CancellationToken cancellationToken = default)
-        {
-            List<WriteModel<CinderAddress>> requests = addresses.Select(document => new InsertOneModel<CinderAddress>(document))
-                .Cast<WriteModel<CinderAddress>>()
-                .ToList();
-
-            // TODO 20191218 RJ This probably can be handled better
-            try
-            {
-                await Collection.BulkWriteAsync(requests, new BulkWriteOptions {IsOrdered = false}, cancellationToken)
-                    .AnyContext();
-            }
-            catch (MongoBulkWriteException e)
-            {
-                if (e.WriteErrors.Any(error => error.Category != ServerErrorCategory.DuplicateKey))
-                {
-                    throw;
-                }
-
-                throw new LoggedException(e);
-            }
-        }
-
         public async Task UpsertAddress(CinderAddress address, CancellationToken cancellationToken = default)
         {
             await UpsertDocumentAsync(address, cancellationToken).AnyContext();
@@ -130,6 +106,16 @@ namespace Cinder.Data.Repositories
                 .AnyContext();
 
             return result.FirstOrDefault()?["Supply"].AsDecimal ?? 0;
+        }
+
+        public async Task<bool> AddressExists(string hash, CancellationToken cancellationToken = default)
+        {
+            long count = await Collection.Find(address => address.Hash == hash)
+                .Limit(1)
+                .CountDocumentsAsync(cancellationToken)
+                .AnyContext();
+
+            return count == 1;
         }
     }
 }
