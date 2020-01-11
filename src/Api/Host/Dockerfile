@@ -13,6 +13,7 @@ COPY ["src/Shared/Data/Data.csproj", "src/Shared/Data/"]
 COPY ["src/Shared/Documents/Documents.csproj", "src/Shared/Documents/"]
 COPY ["src/Shared/Core/Core.csproj", "src/Shared/Core/"]
 COPY ["src/Api/Search/Search.csproj", "src/Api/Search/"]
+COPY ["src/Shared/Stats/Stats.csproj", "src/Shared/Stats/"]
 RUN dotnet restore "src/Api/Host/Host.csproj"
 COPY . .
 WORKDIR "/src/src/Api/Host"

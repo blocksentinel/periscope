@@ -10,6 +10,7 @@ COPY ["src/Shared/Data/Data.csproj", "src/Shared/Data/"]
 COPY ["src/Shared/Documents/Documents.csproj", "src/Shared/Documents/"]
 COPY ["src/Shared/Core/Core.csproj", "src/Shared/Core/"]
 COPY ["src/Indexing/Shared/HostBase/HostBase/HostBase.csproj", "src/Indexing/Shared/HostBase/HostBase/"]
+COPY ["src/Shared/Stats/Stats.csproj", "src/Shared/Stats/"]
 COPY ["src/Shared/Events/Events.csproj", "src/Shared/Events/"]
 RUN dotnet restore "src/Indexing/StatsIndexer/Host/Host.csproj"
 COPY . .
