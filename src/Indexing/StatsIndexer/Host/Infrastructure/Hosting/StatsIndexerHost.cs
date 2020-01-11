@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Events;
 using Cinder.Extensions;
+using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
 using Foundatio.Jobs;
@@ -17,15 +19,17 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
     public class StatsIndexerHost : BackgroundService
     {
         private readonly IMessageBus _bus;
-        private readonly NetStatsJob _netStatsJob;
-        private readonly IQueue<NetStatsWorkItem> _queue;
+        private readonly NetInfoJob _netStatsJob;
+        private readonly PriceJob _priceJob;
+        private readonly IQueue<NetInfoWorkItem> _queue;
 
         public StatsIndexerHost(ILoggerFactory loggerFactory, IMessageBus bus, NetInfoService netInfoService,
-            IConnectionMultiplexer muxer, IQueue<NetStatsWorkItem> queue)
+            IConnectionMultiplexer muxer, IQueue<NetInfoWorkItem> queue, ICoinGeckoApi api)
         {
             _bus = bus;
             _queue = queue;
-            _netStatsJob = new NetStatsJob(_queue, loggerFactory, netInfoService, muxer);
+            _netStatsJob = new NetInfoJob(_queue, loggerFactory, netInfoService, muxer);
+            _priceJob = new PriceJob(loggerFactory, muxer, api);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,7 +39,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
                 _bus.SubscribeAsync<BlockFoundEvent>(
                     async @event =>
                     {
-                        await _queue.EnqueueAsync(new NetStatsWorkItem
+                        await _queue.EnqueueAsync(new NetInfoWorkItem
                             {
                                 BlockNumber = @event.BlockNumber,
                                 Difficulty = @event.Difficulty,
@@ -45,7 +49,8 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
                             })
                             .AnyContext();
                     }, stoppingToken),
-                _netStatsJob.RunContinuousAsync(cancellationToken: stoppingToken)
+                _netStatsJob.RunContinuousAsync(cancellationToken: stoppingToken),
+                _priceJob.RunContinuousAsync(TimeSpan.FromSeconds(60), cancellationToken: stoppingToken)
             };
 
             await Task.WhenAll(tasks).AnyContext();
@@ -54,6 +59,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
         public override void Dispose()
         {
             _netStatsJob?.Dispose();
+            _priceJob?.Dispose();
             base.Dispose();
         }
     }
