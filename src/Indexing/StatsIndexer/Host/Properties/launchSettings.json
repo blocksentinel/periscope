@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Cinder.Indexers.StatsIndexer.Host": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

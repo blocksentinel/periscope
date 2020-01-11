@@ -22,5 +22,19 @@ namespace Cinder.Api.Host.Controllers
         {
             return await Mediator.Send(new GetSupply.Query()).AnyContext();
         }
+
+        [HttpGet("netinfo")]
+        [ProducesResponseType(typeof(GetNetInfo.Model), StatusCodes.Status200OK)]
+        public async Task<GetNetInfo.Model> GetNetInfo()
+        {
+            return await Mediator.Send(new GetNetInfo.Query()).AnyContext();
+        }
+
+        [HttpGet("price")]
+        [ProducesResponseType(typeof(GetPrice.Model), StatusCodes.Status200OK)]
+        public async Task<GetPrice.Model> GetPrice()
+        {
+            return await Mediator.Send(new GetPrice.Query()).AnyContext();
+        }
     }
 }

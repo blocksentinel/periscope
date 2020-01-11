@@ -7,4 +7,8 @@
     <RootNamespace>Cinder.Events</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Documents\Documents.csproj" />
+  </ItemGroup>
+
 </Project>

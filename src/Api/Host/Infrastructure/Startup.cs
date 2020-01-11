@@ -29,6 +29,7 @@ namespace Cinder.Api.Host.Infrastructure
             services.AddDatabase();
             services.AddMediator();
             services.AddSearch();
+            services.AddStats();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddValidation();
         }
 

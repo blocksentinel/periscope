@@ -10,7 +10,7 @@ An indexer and API for the Ellaism blockchain.
 ## Frontend for Cinder
 
  - [UI using Vue.js](https://github.com/ellaismproject/Cinder.UI.Vue)
- - [UI prototype using Blazor](https://github.com/ellaismproject/Cinder.UI.Blazor)
+ - [UI prototype using Blazor](https://github.com/ellaismproject/Cinder.UI.Blazor) *Archived*
 
 ## Thanks and Credits
 
