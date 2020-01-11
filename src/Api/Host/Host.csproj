@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Core\Core.csproj" />
     <ProjectReference Include="..\..\Shared\Data\Data.csproj" />
+    <ProjectReference Include="..\..\Shared\Stats\Stats.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 

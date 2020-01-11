@@ -11,12 +11,12 @@ using StackExchange.Redis;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
-    public class NetStatsJob : QueueJobBase<NetStatsWorkItem>, IDisposable
+    public class NetInfoJob : QueueJobBase<NetInfoWorkItem>, IDisposable
     {
         private readonly NetInfoService _netInfoService;
         private readonly ICacheClient _statsCache;
 
-        public NetStatsJob(IQueue<NetStatsWorkItem> queue, ILoggerFactory loggerFactory, NetInfoService netInfoService,
+        public NetInfoJob(IQueue<NetInfoWorkItem> queue, ILoggerFactory loggerFactory, NetInfoService netInfoService,
             IConnectionMultiplexer muxer) : base(queue, loggerFactory)
         {
             _netInfoService = netInfoService;
@@ -29,21 +29,20 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
             _statsCache?.Dispose();
         }
 
-        protected override async Task<JobResult> ProcessQueueEntryAsync(QueueEntryContext<NetStatsWorkItem> context)
+        protected override async Task<JobResult> ProcessQueueEntryAsync(QueueEntryContext<NetInfoWorkItem> context)
         {
             try
             {
-                NetStatsWorkItem block = context.QueueEntry.Value;
+                NetInfoWorkItem block = context.QueueEntry.Value;
                 _logger.LogDebug("NetStatsJob fired, Bock: {@Block}", block);
 
-                NetInfo netInfo = new NetInfo
-                {
-                    BestBlock = block.BlockNumber,
-                    BestBlockTimestamp = block.Timestamp,
-                    Difficulty = await _netInfoService.GetDifficulty(block.Difficulty).AnyContext(),
-                    AverageBlockTime = await _netInfoService.GetAverageBlockTime(block.Timestamp).AnyContext(),
-                    AverageNetworkHashRate = await _netInfoService.GetAverageNetworkHashRate(block.Difficulty).AnyContext()
-                };
+                NetInfo netInfo = await _statsCache.GetAsync(NetInfo.DefaultCacheKey, new NetInfo()).AnyContext();
+
+                netInfo.BestBlock = block.BlockNumber;
+                netInfo.BestBlockTimestamp = block.Timestamp;
+                netInfo.Difficulty = await _netInfoService.GetDifficulty(block.Difficulty).AnyContext();
+                netInfo.AverageBlockTime = await _netInfoService.GetAverageBlockTime(block.Timestamp).AnyContext();
+                netInfo.AverageNetworkHashRate = await _netInfoService.GetAverageNetworkHashRate(block.Difficulty).AnyContext();
 
                 await _statsCache.AddAsync(NetInfo.DefaultCacheKey, netInfo).AnyContext();
             }

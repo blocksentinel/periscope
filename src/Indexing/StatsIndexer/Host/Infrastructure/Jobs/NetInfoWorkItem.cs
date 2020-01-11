@@ -1,6 +1,6 @@
 ﻿namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
-    public class NetStatsWorkItem
+    public class NetInfoWorkItem
     {
         public ulong BlockNumber { get; set; }
         public ulong Difficulty { get; set; }

@@ -22,5 +22,12 @@ namespace Cinder.Api.Host.Controllers
         {
             return await Mediator.Send(new GetSupply.Query()).AnyContext();
         }
+
+        [HttpGet("netinfo")]
+        [ProducesResponseType(typeof(GetNetInfo.Model), StatusCodes.Status200OK)]
+        public async Task<GetNetInfo.Model> GetNetInfo()
+        {
+            return await Mediator.Send(new GetNetInfo.Query()).AnyContext();
+        }
     }
 }

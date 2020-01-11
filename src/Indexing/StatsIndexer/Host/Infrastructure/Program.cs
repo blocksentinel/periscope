@@ -34,7 +34,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure
                     services.Configure<SettingsBase>(options => Configuration.Bind(options));
                     services.Configure<IndexerSettings>(options => Configuration.Bind(options));
                     services.AddSingleton<NetInfoService>();
-                    services.AddSingleton<IQueue<NetStatsWorkItem>>(sp => new InMemoryQueue<NetStatsWorkItem>());
+                    services.AddSingleton<IQueue<NetInfoWorkItem>>(sp => new InMemoryQueue<NetInfoWorkItem>());
                     services.AddSingleton<IConnectionMultiplexer>(sp =>
                     {
                         IOptions<IndexerSettings> options = sp.GetService<IOptions<IndexerSettings>>();
