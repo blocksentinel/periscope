@@ -1,8 +1,10 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Cinder.Extensions;
 using Cinder.Extensions.DependencyInjection;
 using Cinder.Indexing.HostBase;
+using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Refit;
 using StackExchange.Redis;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure
@@ -41,6 +44,8 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure
 
                         return ConnectionMultiplexer.Connect(options.Value.Redis.ConnectionString);
                     });
+                    services.AddRefitClient<ICoinGeckoApi>()
+                        .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.coingecko.com/api"));
                     services.AddDatabase();
                     services.AddEvents();
                     services.AddWeb3();
