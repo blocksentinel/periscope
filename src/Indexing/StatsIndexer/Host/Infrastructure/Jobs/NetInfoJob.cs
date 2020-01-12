@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Cinder.Extensions;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
@@ -34,7 +34,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
             try
             {
                 NetInfoWorkItem block = context.QueueEntry.Value;
-                _logger.LogDebug("NetStatsJob fired, Bock: {@Block}", block);
+                _logger.LogDebug("NetStatsJob fired, Block: {@Block}", block);
 
                 NetInfo netInfo = await _statsCache.GetAsync(NetInfo.DefaultCacheKey, new NetInfo()).AnyContext();
 
