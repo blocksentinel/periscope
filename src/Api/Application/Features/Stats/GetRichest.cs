@@ -35,6 +35,7 @@ namespace Cinder.Api.Application.Features.Stats
             public string Hash { get; set; }
             public decimal Balance { get; set; }
             public ICollection<string> Tags { get; set; } = new List<string>();
+            public IDictionary<string, decimal> BalanceHistory { get; set; } = new Dictionary<string, decimal>();
         }
 
         public class Handler : IRequestHandler<Query, IPage<Model>>
@@ -67,7 +68,8 @@ namespace Cinder.Api.Application.Features.Stats
                         Name = meta?.Name,
                         Hash = address.Hash,
                         Balance = address.Balance,
-                        Tags = meta?.Tags ?? new List<string>()
+                        Tags = meta?.Tags ?? new List<string>(),
+                        BalanceHistory = address.BalanceHistory ?? new Dictionary<string, decimal>()
                     };
                 });
 

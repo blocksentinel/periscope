@@ -34,7 +34,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
             try
             {
                 NetInfoWorkItem block = context.QueueEntry.Value;
-                _logger.LogDebug("NetStatsJob fired, Bock: {@Block}", block);
+                _logger.LogDebug("NetStatsJob fired, Block: {@Block}", block);
 
                 NetInfo netInfo = await _statsCache.GetAsync(NetInfo.DefaultCacheKey, new NetInfo()).AnyContext();
 
@@ -44,7 +44,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
                 netInfo.AverageBlockTime = await _netInfoService.GetAverageBlockTime(block.Timestamp).AnyContext();
                 netInfo.AverageNetworkHashRate = await _netInfoService.GetAverageNetworkHashRate(block.Difficulty).AnyContext();
 
-                await _statsCache.AddAsync(NetInfo.DefaultCacheKey, netInfo).AnyContext();
+                await _statsCache.SetAsync(NetInfo.DefaultCacheKey, netInfo).AnyContext();
             }
             catch (Exception e)
             {
