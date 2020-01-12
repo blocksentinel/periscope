@@ -34,6 +34,7 @@ namespace Cinder.Api.Application.Features.Address
             public ulong? TransactionCount { get; set; }
             public ulong? Timestamp { get; set; }
             public ICollection<string> Tags { get; set; } = new List<string>();
+            public IDictionary<string, decimal> BalanceHistory { get; set; } = new Dictionary<string, decimal>();
         }
 
         public class Handler : IRequestHandler<Query, Model>
@@ -68,7 +69,8 @@ namespace Cinder.Api.Application.Features.Address
                     BlocksMined = address.BlocksMined,
                     TransactionCount = address.TransactionCount,
                     Timestamp = address.Timestamp,
-                    Tags = meta?.Tags ?? new List<string>()
+                    Tags = meta?.Tags ?? new List<string>(),
+                    BalanceHistory = address.BalanceHistory ?? new Dictionary<string, decimal>()
                 };
             }
         }
