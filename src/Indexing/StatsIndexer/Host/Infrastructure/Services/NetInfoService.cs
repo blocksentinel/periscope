@@ -30,6 +30,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
             ICollection<long> timestamps = await _memoryCache.GetAsync<ICollection<long>>(TimestampCacheKey, new List<long>());
 
             timestamps.Add((long) timestamp);
+            timestamps = timestamps.OrderBy(t => t).ToList();
 
             if (timestamps.Count > 50)
             {
