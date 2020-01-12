@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Cinder.Extensions;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
@@ -44,7 +44,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
                 netInfo.AverageBlockTime = await _netInfoService.GetAverageBlockTime(block.Timestamp).AnyContext();
                 netInfo.AverageNetworkHashRate = await _netInfoService.GetAverageNetworkHashRate(block.Difficulty).AnyContext();
 
-                await _statsCache.AddAsync(NetInfo.DefaultCacheKey, netInfo).AnyContext();
+                await _statsCache.SetAsync(NetInfo.DefaultCacheKey, netInfo).AnyContext();
             }
             catch (Exception e)
             {

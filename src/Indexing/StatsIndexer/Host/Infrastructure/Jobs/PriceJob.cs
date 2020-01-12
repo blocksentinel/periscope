@@ -58,7 +58,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
                 price.Usd24HrVol = GetCoinPropertyByKey(response, Ellaism.Id, Ellaism.Usd24HrVol);
                 price.Usd24HrChange = GetCoinPropertyByKey(response, Ellaism.Id, Ellaism.Usd24HrChange);
 
-                await _statsCache.AddAsync(Price.DefaultCacheKey, price).AnyContext();
+                await _statsCache.SetAsync(Price.DefaultCacheKey, price).AnyContext();
             }
             catch (Exception e)
             {
