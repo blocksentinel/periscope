@@ -9,7 +9,7 @@ COPY ["src/Indexing/BlockIndexer/Host/Host.csproj", "src/Indexing/BlockIndexer/H
 COPY ["src/Shared/Data/Data.csproj", "src/Shared/Data/"]
 COPY ["src/Shared/Documents/Documents.csproj", "src/Shared/Documents/"]
 COPY ["src/Shared/Core/Core.csproj", "src/Shared/Core/"]
-COPY ["src/Indexing/Shared/HostBase/HostBase/HostBase.csproj", "src/Indexing/Shared/HostBase/HostBase/"]
+COPY ["src/Indexing/HostBase/HostBase.csproj", "src/Indexing/HostBase/"]
 COPY ["src/Shared/Events/Events.csproj", "src/Shared/Events/"]
 RUN dotnet restore "src/Indexing/BlockIndexer/Host/Host.csproj"
 COPY . .

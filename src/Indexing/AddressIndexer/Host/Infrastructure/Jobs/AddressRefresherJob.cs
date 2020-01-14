@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cinder.Core.SharedKernel;
 using Cinder.Data.Repositories;
 using Cinder.Documents;
 using Cinder.Extensions;
@@ -13,28 +14,21 @@ using Nethereum.Hex.HexTypes;
 using Nethereum.Parity;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Util;
-using StackExchange.Redis;
 
 namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
 {
-    public class AddressRefresherJob : JobBase, IDisposable
+    public class AddressRefresherJob : JobBase
     {
         private readonly IAddressRepository _addressRepository;
-        private readonly ICacheClient _statsCache;
+        private readonly ScopedHybridCacheClient _statsCache;
         private readonly IWeb3Parity _web3;
 
-        public AddressRefresherJob(ILoggerFactory loggerFactory, IConnectionMultiplexer muxer,
+        public AddressRefresherJob(ILoggerFactory loggerFactory, IHybridCacheClient cacheClient,
             IAddressRepository addressRepository, IWeb3Parity web3) : base(loggerFactory)
         {
             _addressRepository = addressRepository;
+            _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
             _web3 = web3;
-            _statsCache =
-                new StatsCache(new RedisCacheClientOptions {ConnectionMultiplexer = muxer, LoggerFactory = loggerFactory});
-        }
-
-        public void Dispose()
-        {
-            _statsCache?.Dispose();
         }
 
         protected override async Task<JobResult> RunInternalAsync(JobContext context)

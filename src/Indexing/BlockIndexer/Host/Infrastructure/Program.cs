@@ -20,21 +20,18 @@ namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure
 
         public static async Task<int> Main(string[] args)
         {
-            HostWrapper hostWrapper = new HostWrapper
-            {
-                DefaultBuilder = new HostBuilder().ConfigureServices((hostContext, services) =>
+            return await HostWrapper.Create(builder => builder.ConfigureServices((hostContext, services) =>
                 {
                     services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
                     services.AddHostedService<BlockIndexerHost>();
-                    services.Configure<SettingsBase>(options => Configuration.Bind(options));
+                    services.AddOptions(Configuration);
                     services.AddBlockchain();
                     services.AddDatabase();
                     services.AddEvents();
                     services.AddWeb3();
-                })
-            };
-
-            return await hostWrapper.Run("Block Indexer", Configuration).AnyContext();
+                }))
+                .Run("Block Indexer", Configuration)
+                .AnyContext();
         }
     }
 }

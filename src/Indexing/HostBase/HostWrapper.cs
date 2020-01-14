@@ -11,9 +11,22 @@ namespace Cinder.Indexing.HostBase
 {
     public class HostWrapper
     {
-        public IHostBuilder DefaultBuilder = new HostBuilder();
+        public IHostBuilder DefaultBuilder;
 
-        public async Task<int> Run(string name, IConfiguration configuration)
+        protected HostWrapper(IHostBuilder builder)
+        {
+            DefaultBuilder = builder;
+        }
+
+        public static HostWrapper Create(Action<IHostBuilder> builder)
+        {
+            IHostBuilder obj = new HostBuilder();
+            builder(obj);
+
+            return new HostWrapper(obj);
+        }
+
+        public virtual async Task<int> Run(string name, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 
@@ -21,8 +34,8 @@ namespace Cinder.Indexing.HostBase
             {
                 Log.Information("Starting {Name}; Version: {Version}; Build Date: {BuildDate}", name, VersionInfo.Version,
                     VersionInfo.BuildDate);
-                IHost host = DefaultBuilder.UseSerilog().Build();
 
+                IHost host = DefaultBuilder.UseSerilog().Build();
                 await host.RunAsync().AnyContext();
 
                 return 0;
@@ -31,7 +44,7 @@ namespace Cinder.Indexing.HostBase
             {
                 if (!(e is LoggedException))
                 {
-                    Log.Fatal(e, "Address Indexer terminated unexpectedly");
+                    Log.Fatal(e, "{Name} terminated unexpectedly", name);
                 }
 
                 return 1;

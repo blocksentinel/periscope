@@ -11,8 +11,6 @@ using Foundatio.Messaging;
 using Foundatio.Queues;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Nethereum.Parity;
-using StackExchange.Redis;
 
 namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Hosting
 {
@@ -23,13 +21,13 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Hosting
         private readonly IMessageBus _bus;
         private readonly IQueue<AddressTransactedWorkItem> _queue;
 
-        public AddressIndexerHost(ILoggerFactory loggerFactory, IMessageBus bus, IConnectionMultiplexer muxer,
-            IQueue<AddressTransactedWorkItem> queue, IAddressRepository addressRepository, IWeb3Parity web3)
+        public AddressIndexerHost(ILoggerFactory loggerFactory, IMessageBus bus, IQueue<AddressTransactedWorkItem> queue,
+            IAddressRepository addressRepository, AddressRefresherJob addressRefresherJob)
         {
             _bus = bus;
             _queue = queue;
             _addressTransactedJob = new AddressTransactedJob(_queue, loggerFactory, addressRepository);
-            _addressRefresherJob = new AddressRefresherJob(loggerFactory, muxer, addressRepository, web3);
+            _addressRefresherJob = addressRefresherJob;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -48,12 +46,6 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Hosting
             };
 
             await Task.WhenAll(tasks).AnyContext();
-        }
-
-        public override void Dispose()
-        {
-            _addressRefresherJob?.Dispose();
-            base.Dispose();
         }
     }
 }

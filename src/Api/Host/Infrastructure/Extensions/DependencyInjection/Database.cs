@@ -1,5 +1,5 @@
-﻿using Cinder.Api.Host.Infrastructure;
-using Cinder.Api.Host.Infrastructure.Repositories;
+﻿using Cinder.Api.Host.Infrastructure.Repositories;
+using Cinder.Core.SharedKernel;
 using Cinder.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -23,6 +23,10 @@ namespace Cinder.Extensions.DependencyInjection
                 sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
             services.AddSingleton<IBlockRepository>(sp =>
                 sp.GetService<IApiRepositoryFactory>().CreateRepository<BlockRepository>());
+            services.AddSingleton<IContractRepository>(sp =>
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<ContractRepository>());
+            services.AddSingleton<ITransactionLogRepository>(sp =>
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<TransactionLogRepository>());
             services.AddSingleton<ITransactionRepository>(sp =>
                 sp.GetService<IApiRepositoryFactory>().CreateRepository<TransactionRepository>());
             services.AddSingleton<IAddressMetaRepository>(sp =>

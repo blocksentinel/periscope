@@ -1,4 +1,4 @@
-﻿using Cinder.Indexing.HostBase;
+﻿using Cinder.Core.SharedKernel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Nethereum.Parity;
@@ -12,7 +12,7 @@ namespace Cinder.Extensions.DependencyInjection
         {
             services.AddSingleton<IWeb3Parity>(sp =>
             {
-                IOptions<SettingsBase> options = sp.GetService<IOptions<SettingsBase>>();
+                IOptions<Settings> options = sp.GetService<IOptions<Settings>>();
 
                 return new Web3Parity(options.Value.Node.RpcUrl);
             });

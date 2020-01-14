@@ -4,32 +4,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Events;
 using Cinder.Extensions;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
 using Foundatio.Jobs;
 using Foundatio.Messaging;
 using Foundatio.Queues;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using StackExchange.Redis;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
 {
     public class StatsIndexerHost : BackgroundService
     {
         private readonly IMessageBus _bus;
-        private readonly NetInfoJob _netStatsJob;
+        private readonly CirculatingSupplyJob _circulatingSupplyJob;
+        private readonly NetInfoJob _netInfoJob;
         private readonly PriceJob _priceJob;
         private readonly IQueue<NetInfoWorkItem> _queue;
 
-        public StatsIndexerHost(ILoggerFactory loggerFactory, IMessageBus bus, NetInfoService netInfoService,
-            IConnectionMultiplexer muxer, IQueue<NetInfoWorkItem> queue, ICoinGeckoApi api)
+        public StatsIndexerHost(IMessageBus bus, CirculatingSupplyJob circulatingSupplyJob, NetInfoJob netInfoJob,
+            PriceJob priceJob, IQueue<NetInfoWorkItem> queue)
         {
             _bus = bus;
+            _circulatingSupplyJob = circulatingSupplyJob;
+            _netInfoJob = netInfoJob;
+            _priceJob = priceJob;
             _queue = queue;
-            _netStatsJob = new NetInfoJob(_queue, loggerFactory, netInfoService, muxer);
-            _priceJob = new PriceJob(loggerFactory, muxer, api);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,18 +47,12 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
                             })
                             .AnyContext();
                     }, stoppingToken),
-                _netStatsJob.RunContinuousAsync(cancellationToken: stoppingToken),
-                _priceJob.RunContinuousAsync(TimeSpan.FromSeconds(60), cancellationToken: stoppingToken)
+                _netInfoJob.RunContinuousAsync(cancellationToken: stoppingToken),
+                _priceJob.RunContinuousAsync(TimeSpan.FromSeconds(60), cancellationToken: stoppingToken),
+                _circulatingSupplyJob.RunContinuousAsync(TimeSpan.FromSeconds(60), cancellationToken: stoppingToken)
             };
 
             await Task.WhenAll(tasks).AnyContext();
-        }
-
-        public override void Dispose()
-        {
-            _netStatsJob?.Dispose();
-            _priceJob?.Dispose();
-            base.Dispose();
         }
     }
 }

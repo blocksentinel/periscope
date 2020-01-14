@@ -1,6 +1,6 @@
 # ![Ellaism](doc/logo.png) Cinder
 
-An indexer and API for the Ellaism blockchain.
+An indexer and API for Ethereum networks.
 
 ![GitHub](https://img.shields.io/github/license/ellaismproject/Cinder)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ellaismproject/Cinder/Build%20and%20Test)
@@ -11,6 +11,12 @@ An indexer and API for the Ellaism blockchain.
 
  - [UI using Vue.js](https://github.com/ellaismproject/Cinder.UI.Vue)
  - [UI prototype using Blazor](https://github.com/ellaismproject/Cinder.UI.Blazor) *Archived*
+
+## Showcase
+
+* [Ellaism Blockchain Explorer](https://explorer.ellaism.io)
+
+If your network uses Cinder, open a PR to be included here.
 
 ## Thanks and Credits
 

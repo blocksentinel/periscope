@@ -22,7 +22,7 @@
     <ProjectReference Include="..\..\..\Shared\Documents\Documents.csproj" />
     <ProjectReference Include="..\..\..\Shared\Events\Events.csproj" />
     <ProjectReference Include="..\..\..\Shared\Stats\Stats.csproj" />
-    <ProjectReference Include="..\..\Shared\HostBase\HostBase\HostBase.csproj" />
+    <ProjectReference Include="..\..\HostBase\HostBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>

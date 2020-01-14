@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cinder.Extensions;
@@ -7,7 +6,7 @@ using Foundatio.Caching;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
 {
-    public class NetInfoService : IDisposable
+    public class NetInfoService : INetInfoService
     {
         private const string TimestampCacheKey = "Timestamp";
         private const string NetworkHashRateCacheKey = "NetworkHashRate";
@@ -17,11 +16,6 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
         public NetInfoService()
         {
             _memoryCache = new InMemoryCacheClient();
-        }
-
-        public void Dispose()
-        {
-            _memoryCache?.Dispose();
         }
 
         public async Task<decimal> GetAverageBlockTime(ulong timestamp)
@@ -63,7 +57,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
                 return difficulty;
             }
 
-            return await Task.FromResult(difficulty / ((decimal) 1024 * 1024 * 1024)).AnyContext();
+            return await Task.FromResult(difficulty / ((decimal) 1000 * 1000 * 1000)).AnyContext();
         }
 
         public async Task<decimal> GetAverageNetworkHashRate(ulong difficulty)
@@ -88,7 +82,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
 
             averageNetworkHashRate = (decimal) networkHashRate.Select(rate => rate).Average() /
                                      averageBlockTime /
-                                     ((decimal) 1024 * 1024 * 1024);
+                                     ((decimal) 1000 * 1000 * 1000);
 
             await _memoryCache.SetAsync(NetworkHashRateCacheKey, networkHashRate.Reverse().Take(5000).Reverse().ToList())
                 .AnyContext();
