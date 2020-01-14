@@ -1,4 +1,5 @@
-﻿using Cinder.Indexing.HostBase;
+﻿using Cinder.Core.SharedKernel;
+using Cinder.Indexing.HostBase;
 using Foundatio.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ namespace Cinder.Extensions.DependencyInjection
         {
             services.AddSingleton<IMessageBus>(sp =>
             {
-                IOptions<SettingsBase> options = sp.GetService<IOptions<SettingsBase>>();
+                IOptions<Settings> options = sp.GetService<IOptions<Settings>>();
                 ILoggerFactory loggerFactory = sp.GetService<ILoggerFactory>();
 
                 return new RabbitMQMessageBus(new RabbitMQMessageBusOptions

@@ -1,4 +1,5 @@
-﻿using Cinder.Data.Repositories;
+﻿using Cinder.Core.SharedKernel;
+using Cinder.Data.Repositories;
 using Cinder.Indexing.HostBase;
 using Cinder.Indexing.HostBase.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ namespace Cinder.Extensions.DependencyInjection
         {
             services.AddSingleton(sp =>
             {
-                IOptions<SettingsBase> options = sp.GetService<IOptions<SettingsBase>>();
+                IOptions<Settings> options = sp.GetService<IOptions<Settings>>();
 
                 return IndexerRepositoryFactory.Create(options.Value.Database);
             });
