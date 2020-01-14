@@ -18,23 +18,19 @@ namespace Cinder.Extensions.DependencyInjection
                 return ApiRepositoryFactory.Create(options.Value.Database);
             });
             services.AddSingleton<IAddressRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<AddressRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressRepository>());
             services.AddSingleton<IAddressTransactionRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
             services.AddSingleton<IBlockRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<BlockRepository>());
-            services.AddSingleton<IBlockProgressRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<BlockProgressRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<BlockRepository>());
             services.AddSingleton<IContractRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<ContractRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<ContractRepository>());
             services.AddSingleton<ITransactionLogRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<TransactionLogRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<TransactionLogRepository>());
             services.AddSingleton<ITransactionRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<TransactionRepository>());
-            services.AddSingleton<IBlockProgressRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<BlockProgressRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<TransactionRepository>());
             services.AddSingleton<IAddressMetaRepository>(sp =>
-                sp.GetService<ApiRepositoryFactory>().CreateRepository<AddressMetaRepository>());
+                sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressMetaRepository>());
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Cinder.Core.SharedKernel;
 using Cinder.Data.Repositories;
-using Cinder.Indexing.HostBase;
 using Cinder.Indexing.HostBase.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -32,8 +31,6 @@ namespace Cinder.Extensions.DependencyInjection
                 sp.GetService<IIndexerRepositoryFactory>().CreateRepository<TransactionLogRepository>());
             services.AddSingleton<ITransactionRepository>(sp =>
                 sp.GetService<IIndexerRepositoryFactory>().CreateRepository<TransactionRepository>());
-            services.AddSingleton<IBlockProgressRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<BlockProgressRepository>());
             services.AddSingleton<IAddressMetaRepository>(sp =>
                 sp.GetService<IIndexerRepositoryFactory>().CreateRepository<AddressMetaRepository>());
         }

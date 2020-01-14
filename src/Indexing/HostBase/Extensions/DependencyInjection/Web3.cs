@@ -1,5 +1,4 @@
 ﻿using Cinder.Core.SharedKernel;
-using Cinder.Indexing.HostBase;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Nethereum.Parity;

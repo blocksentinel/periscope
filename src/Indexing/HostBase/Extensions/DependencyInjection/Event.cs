@@ -1,5 +1,4 @@
 ﻿using Cinder.Core.SharedKernel;
-using Cinder.Indexing.HostBase;
 using Foundatio.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
