@@ -1,5 +1,4 @@
-﻿using Cinder.Api.Host.Infrastructure;
-using Cinder.Stats;
+﻿using Cinder.Core.SharedKernel;
 using Foundatio.Caching;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -9,7 +8,7 @@ using StackExchange.Redis;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Stats
+    public static class Stat
     {
         public static void AddStats(this IServiceCollection services)
         {
@@ -19,12 +18,15 @@ namespace Cinder.Extensions.DependencyInjection
 
                 return ConnectionMultiplexer.Connect(options.Value.Redis.ConnectionString);
             });
-            services.AddSingleton<IStatsCache>(sp =>
+            services.AddSingleton<IHybridCacheClient>(sp =>
             {
                 IConnectionMultiplexer muxer = sp.GetService<IConnectionMultiplexer>();
                 ILoggerFactory loggerFactory = sp.GetService<ILoggerFactory>();
 
-                return new StatsCache(new RedisCacheClientOptions {ConnectionMultiplexer = muxer, LoggerFactory = loggerFactory});
+                return new RedisHybridCacheClient(new RedisCacheClientOptions
+                {
+                    ConnectionMultiplexer = muxer, LoggerFactory = loggerFactory
+                });
             });
         }
     }
