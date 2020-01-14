@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Cinder.Core.SharedKernel;
 using Cinder.Extensions;
 using Cinder.Stats;
 using Foundatio.Caching;
@@ -22,11 +23,11 @@ namespace Cinder.Api.Application.Features.Stats
 
         public class Handler : IRequestHandler<Query, Model>
         {
-            private readonly IStatsCache _statsCache;
+            private readonly ScopedHybridCacheClient _statsCache;
 
-            public Handler(IStatsCache statsCache)
+            public Handler(IHybridCacheClient cacheClient)
             {
-                _statsCache = statsCache;
+                _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
             }
 
             public async Task<Model> Handle(Query request, CancellationToken cancellationToken)

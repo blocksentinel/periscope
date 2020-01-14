@@ -1,7 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Data.Repositories;
+using Cinder.Core.SharedKernel;
 using Cinder.Extensions;
+using Cinder.Stats;
+using Foundatio.Caching;
 using MediatR;
 
 namespace Cinder.Api.Application.Features.Stats
@@ -17,18 +19,19 @@ namespace Cinder.Api.Application.Features.Stats
 
         public class Handler : IRequestHandler<Query, Model>
         {
-            private readonly IAddressRepository _addressRepository;
+            private readonly ScopedHybridCacheClient _statsCache;
 
-            public Handler(IAddressRepository addressRepository)
+            public Handler(IHybridCacheClient cacheClient)
             {
-                _addressRepository = addressRepository;
+                _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
             }
 
             public async Task<Model> Handle(Query request, CancellationToken cancellationToken)
             {
-                decimal supply = await _addressRepository.GetSupply(cancellationToken).AnyContext();
+                CirculatingSupply supply = await _statsCache.GetAsync(CirculatingSupply.DefaultCacheKey, new CirculatingSupply())
+                    .AnyContext();
 
-                return new Model {Supply = supply};
+                return new Model {Supply = supply.Supply};
             }
         }
     }
