@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cinder.Core.SharedKernel;
 using Cinder.Extensions;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Requests;
@@ -10,27 +11,20 @@ using Cinder.Stats;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Microsoft.Extensions.Logging;
-using StackExchange.Redis;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
-    public class PriceJob : JobBase, IDisposable
+    public class PriceJob : JobBase
     {
         private static readonly string[] Ids = {Ellaism.Id};
         private static readonly string[] Currencies = {Ellaism.Btc, Ellaism.Usd};
         private readonly ICoinGeckoApi _api;
-        private readonly StatsCache _statsCache;
+        private readonly ScopedHybridCacheClient _statsCache;
 
-        public PriceJob(ILoggerFactory loggerFactory, IConnectionMultiplexer muxer, ICoinGeckoApi api) : base(loggerFactory)
+        public PriceJob(ILoggerFactory loggerFactory, ICoinGeckoApi api, IHybridCacheClient cacheClient) : base(loggerFactory)
         {
             _api = api;
-            _statsCache =
-                new StatsCache(new RedisCacheClientOptions {ConnectionMultiplexer = muxer, LoggerFactory = loggerFactory});
-        }
-
-        public void Dispose()
-        {
-            _statsCache?.Dispose();
+            _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
         }
 
         protected override async Task<JobResult> RunInternalAsync(JobContext context)

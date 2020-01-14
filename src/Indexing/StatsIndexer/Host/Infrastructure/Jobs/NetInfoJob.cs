@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Cinder.Core.SharedKernel;
 using Cinder.Extensions;
 using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
 using Cinder.Stats;
@@ -7,26 +8,19 @@ using Foundatio.Caching;
 using Foundatio.Jobs;
 using Foundatio.Queues;
 using Microsoft.Extensions.Logging;
-using StackExchange.Redis;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
-    public class NetInfoJob : QueueJobBase<NetInfoWorkItem>, IDisposable
+    public class NetInfoJob : QueueJobBase<NetInfoWorkItem>
     {
-        private readonly NetInfoService _netInfoService;
-        private readonly ICacheClient _statsCache;
+        private readonly INetInfoService _netInfoService;
+        private readonly ScopedCacheClient _statsCache;
 
-        public NetInfoJob(IQueue<NetInfoWorkItem> queue, ILoggerFactory loggerFactory, NetInfoService netInfoService,
-            IConnectionMultiplexer muxer) : base(queue, loggerFactory)
+        public NetInfoJob(IQueue<NetInfoWorkItem> queue, ILoggerFactory loggerFactory, INetInfoService netInfoService,
+            IHybridCacheClient cacheClient) : base(queue, loggerFactory)
         {
             _netInfoService = netInfoService;
-            _statsCache =
-                new StatsCache(new RedisCacheClientOptions {ConnectionMultiplexer = muxer, LoggerFactory = loggerFactory});
-        }
-
-        public void Dispose()
-        {
-            _statsCache?.Dispose();
+            _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
         }
 
         protected override async Task<JobResult> ProcessQueueEntryAsync(QueueEntryContext<NetInfoWorkItem> context)
