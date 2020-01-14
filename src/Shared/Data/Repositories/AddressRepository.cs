@@ -98,7 +98,6 @@ namespace Cinder.Data.Repositories
 
         public async Task<decimal> GetSupply(CancellationToken cancellationToken = default)
         {
-            // TODO 20191226 RJ This needs to be calculated/retreived in a different way, it is currently inefficient
             List<BsonDocument> result = await Collection.Aggregate()
                 .AppendStage(new BsonDocumentPipelineStageDefinition<CinderAddress, BsonDocument>(new BsonDocument("$group",
                     new BsonDocument {{"_id", BsonNull.Value}, {"Supply", new BsonDocument("$sum", "$Balance")}})))
