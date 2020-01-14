@@ -1,4 +1,4 @@
-﻿using Cinder.Api.Host.Infrastructure;
+﻿using Cinder.Core.SharedKernel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +9,7 @@ namespace Cinder.Extensions.DependencyInjection
     {
         public static void AddOptions(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<Settings>(options => configuration.Bind(options));
+            services.Configure<Settings>(configuration.Bind);
         }
     }
 }

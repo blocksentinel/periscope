@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Cinder.Core;
 using Cinder.Core.Exceptions;
+using Cinder.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,8 +27,9 @@ namespace Cinder.Api.Host.Infrastructure
             {
                 Log.Information("Starting API; Version: {Version}; Build Date: {BuildDate}", VersionInfo.Version,
                     VersionInfo.BuildDate);
+
                 IWebHost host = BuildWebHost(args);
-                await host.RunAsync();
+                await host.RunAsync().AnyContext();
 
                 return 0;
             }
