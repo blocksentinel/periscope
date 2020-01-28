@@ -23,7 +23,7 @@ namespace Cinder.Extensions.DependencyInjection
                 IConnectionMultiplexer muxer = sp.GetService<IConnectionMultiplexer>();
                 ILoggerFactory loggerFactory = sp.GetService<ILoggerFactory>();
 
-                return new RedisHybridCacheClient(new RedisCacheClientOptions
+                return new RedisHybridCacheClient(new RedisHybridCacheClientOptions
                 {
                     ConnectionMultiplexer = muxer, LoggerFactory = loggerFactory
                 });
