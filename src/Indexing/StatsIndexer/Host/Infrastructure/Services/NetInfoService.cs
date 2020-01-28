@@ -74,15 +74,14 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
                 return 0;
             }
 
-            decimal averageNetworkHashRate = 0;
             ICollection<long> networkHashRate =
                 await _memoryCache.GetAsync<ICollection<long>>(NetworkHashRateCacheKey, new List<long>());
 
             networkHashRate.Add((long) difficulty);
 
-            averageNetworkHashRate = (decimal) networkHashRate.Select(rate => rate).Average() /
-                                     averageBlockTime /
-                                     ((decimal) 1000 * 1000 * 1000);
+            decimal averageNetworkHashRate = (decimal) networkHashRate.Select(rate => rate).Average() /
+                                             averageBlockTime /
+                                             ((decimal) 1000 * 1000 * 1000);
 
             await _memoryCache.SetAsync(NetworkHashRateCacheKey, networkHashRate.Reverse().Take(5000).Reverse().ToList())
                 .AnyContext();
