@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Cinder.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,7 @@ namespace Cinder.Api.Application.Behaviors
         {
             _timer.Start();
 
-            TResponse response = await next();
+            TResponse response = await next().AnyContext();
 
             _timer.Stop();
 
