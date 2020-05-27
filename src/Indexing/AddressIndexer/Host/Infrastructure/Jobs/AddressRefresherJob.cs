@@ -6,10 +6,12 @@ using Cinder.Core.SharedKernel;
 using Cinder.Data.Repositories;
 using Cinder.Documents;
 using Cinder.Extensions;
+using Cinder.Indexing.AddressIndexer.Host.Infrastructure.Settings;
 using Cinder.Stats;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Nethereum.Hex.HexTypes;
 using Nethereum.Parity;
 using Nethereum.RPC.Eth.DTOs;
@@ -20,12 +22,14 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
     public class AddressRefresherJob : JobBase
     {
         private readonly IAddressRepository _addressRepository;
+        private readonly AddressRefresherSettings _settings;
         private readonly ScopedHybridCacheClient _statsCache;
         private readonly IWeb3Parity _web3;
 
-        public AddressRefresherJob(ILoggerFactory loggerFactory, IHybridCacheClient cacheClient,
-            IAddressRepository addressRepository, IWeb3Parity web3) : base(loggerFactory)
+        public AddressRefresherJob(ILoggerFactory loggerFactory, IOptions<AddressRefresherSettings> settings,
+            IHybridCacheClient cacheClient, IAddressRepository addressRepository, IWeb3Parity web3) : base(loggerFactory)
         {
+            _settings = settings.Value;
             _addressRepository = addressRepository;
             _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
             _web3 = web3;
@@ -41,7 +45,8 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
                     return JobResult.FailedWithMessage("NetInfo is null");
                 }
 
-                IEnumerable<CinderAddress> addresses = await _addressRepository.GetStaleAddresses(limit: 2500).AnyContext();
+                IEnumerable<CinderAddress> addresses =
+                    await _addressRepository.GetStaleAddresses(_settings.Age, _settings.Limit).AnyContext();
                 IEnumerable<CinderAddress> enumerable = addresses as CinderAddress[] ?? addresses.ToArray();
                 _logger.LogDebug("Found {Count} addresses to update", enumerable.Count());
 
@@ -50,32 +55,14 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
                 {
                     _logger.LogDebug("Updating stats for {Hash}", address.Hash);
                     HexBigInteger balance;
-                    HexBigInteger balance7;
-                    HexBigInteger balance30;
-
-                    ulong blockNumber = netInfo.BestBlock;
-                    long blockNumber7DaysAgo = GetPastBlock(blockNumber, netInfo.AverageBlockTime, 7);
-                    long blockNumber30DaysAgo = GetPastBlock(blockNumber, netInfo.AverageBlockTime, 30);
 
                     try
                     {
-                        List<Task<HexBigInteger>> test = new List<Task<HexBigInteger>>
-                        {
-                            _web3.Eth.GetBalance.SendRequestAsync(address.Hash, new BlockParameter(blockNumber)),
-                            _web3.Eth.GetBalance.SendRequestAsync(address.Hash,
-                                new BlockParameter((ulong) blockNumber7DaysAgo)),
-                            _web3.Eth.GetBalance.SendRequestAsync(address.Hash,
-                                new BlockParameter((ulong) blockNumber30DaysAgo))
-                        };
-
-                        HexBigInteger[] result = await Task.WhenAll(test).AnyContext();
-                        balance = result[0];
-                        balance7 = result[1];
-                        balance30 = result[2];
+                        balance = await _web3.Eth.GetBalance.SendRequestAsync(address.Hash, new BlockParameter()).AnyContext();
                     }
                     catch (Exception e)
                     {
-                        _logger.LogDebug(e, "Exception when trying to get balance for {Hash}", address.Hash);
+                        _logger.LogDebug(e, "Could not get balance for {Hash}", address.Hash);
 
                         continue;
                     }
@@ -84,9 +71,32 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
                     address.Timestamp = (ulong) DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                     address.ForceRefresh = false;
 
-                    address.BalanceHistory.Clear();
-                    address.BalanceHistory.Add("7", UnitConversion.Convert.FromWei(balance7));
-                    address.BalanceHistory.Add("30", UnitConversion.Convert.FromWei(balance30));
+                    if (_settings.BalanceHistory.Enabled && _settings.BalanceHistory.Days.Any())
+                    {
+                        IEnumerable<Task<HexBigInteger>> tasks = _settings.BalanceHistory.Days.Select(d =>
+                        {
+                            ulong block = GetPastBlock(netInfo.BestBlock, netInfo.AverageBlockTime, d);
+
+                            return _web3.Eth.GetBalance.SendRequestAsync(address.Hash, new BlockParameter(block));
+                        });
+
+                        try
+                        {
+                            HexBigInteger[] results = await Task.WhenAll(tasks).AnyContext();
+
+                            address.BalanceHistory.Clear();
+
+                            for (int i = 0; i < _settings.BalanceHistory.Days.Length; i++)
+                            {
+                                address.BalanceHistory.Add(_settings.BalanceHistory.Days[i].ToString(),
+                                    UnitConversion.Convert.FromWei(results[i]));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.LogDebug(e, "Could not get historical balance for {Hash}", address.Hash);
+                        }
+                    }
 
                     updated.Add(address);
                 }
@@ -106,7 +116,7 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
             return JobResult.Success;
         }
 
-        private static long GetPastBlock(ulong currentBlockNumber, decimal averageBlockTime, int days)
+        private static ulong GetPastBlock(ulong currentBlockNumber, decimal averageBlockTime, int days)
         {
             if (averageBlockTime == 0)
             {
@@ -120,7 +130,7 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
                 pastBlock = (long) currentBlockNumber;
             }
 
-            return pastBlock;
+            return (ulong) pastBlock;
         }
     }
 }
