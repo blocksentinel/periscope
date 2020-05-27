@@ -25,6 +25,7 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure
                     services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
                     services.AddHostedService<AddressIndexerHost>();
                     services.AddOptions(Configuration);
+                    services.AddCustomOptions(Configuration);
                     services.AddDatabase();
                     services.AddEvents();
                     services.AddJobs();
