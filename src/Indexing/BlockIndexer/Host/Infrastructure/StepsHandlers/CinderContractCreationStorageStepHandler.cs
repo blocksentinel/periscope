@@ -21,7 +21,7 @@ namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 
         protected override async Task ExecuteInternalAsync(ContractCreationVO value)
         {
-            _logger.LogInformation("Processing contract {ContractAddress}", value.ContractAddress);
+            _logger.LogDebug("Processing contract {ContractAddress}", value.ContractAddress);
             await base.ExecuteInternalAsync(value).AnyContext();
         }
     }

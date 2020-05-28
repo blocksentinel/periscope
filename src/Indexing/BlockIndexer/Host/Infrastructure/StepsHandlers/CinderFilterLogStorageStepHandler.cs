@@ -21,7 +21,7 @@ namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 
         protected override async Task ExecuteInternalAsync(FilterLogVO value)
         {
-            _logger.LogInformation("Processing filter log");
+            _logger.LogDebug("Processing filter log");
             await base.ExecuteInternalAsync(value).AnyContext();
         }
     }

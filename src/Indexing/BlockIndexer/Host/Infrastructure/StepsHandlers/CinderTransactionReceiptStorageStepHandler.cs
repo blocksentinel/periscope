@@ -20,7 +20,7 @@ namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 
         protected override async Task ExecuteInternalAsync(TransactionReceiptVO value)
         {
-            _logger.LogInformation("Processing transaction receipt");
+            _logger.LogDebug("Processing transaction receipt");
             await base.ExecuteInternalAsync(value).AnyContext();
         }
     }

@@ -26,7 +26,7 @@ namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 
         protected override async Task ExecuteInternalAsync(BlockWithTransactions value)
         {
-            _logger.LogInformation("Processing block {Block}", value.Number.ToUlong());
+            _logger.LogDebug("Processing block {Block}", value.Number.ToUlong());
             await base.ExecuteInternalAsync(value).AnyContext();
 
             await _bus.PublishAsync(BlockFoundEvent.Create(value)).AnyContext();
