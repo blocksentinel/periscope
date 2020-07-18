@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using System.Linq;
+using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -23,10 +25,29 @@ namespace Cinder.Api.Host.Controllers
         public IActionResult Error()
         {
             IExceptionHandlerFeature context = HttpContext.Features.Get<IExceptionHandlerFeature>();
+            IActionResult result;
+            string logMessage = "Unexpected exception caught";
 
-            _logger.LogError(context.Error, "Unexpected exception caught");
+            switch (context.Error)
+            {
+                case ValidationException error:
+                    logMessage = null;
+                    result = ValidationProblem(new ValidationProblemDetails(
+                        error.Errors.ToDictionary(failure => failure.PropertyName, failure => new[] {failure.ErrorMessage})));
+                    break;
+                default:
+                    result = _environment.IsDevelopment()
+                        ? Problem(context.Error.StackTrace, title: context.Error.Message)
+                        : Problem();
+                    break;
+            }
 
-            return _environment.IsDevelopment() ? Problem(context.Error.StackTrace, title: context.Error.Message) : Problem();
+            if (!string.IsNullOrEmpty(logMessage))
+            {
+                _logger.LogError(context.Error, logMessage);
+            }
+
+            return result;
         }
     }
 }
