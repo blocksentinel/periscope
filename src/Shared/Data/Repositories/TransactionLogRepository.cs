@@ -14,9 +14,9 @@ namespace Cinder.Data.Repositories
         public TransactionLogRepository(IMongoClient client, string databaseName) : base(client, databaseName,
             CollectionName.TransactionLogs) { }
 
-        public async Task UpsertAsync(FilterLogVO log)
+        public Task UpsertAsync(FilterLogVO log)
         {
-            await UpsertDocumentAsync(log.MapToStorageEntityForUpsert<CinderTransactionLog>()).AnyContext();
+            return UpsertDocumentAsync(log.MapToStorageEntityForUpsert<CinderTransactionLog>());
         }
 
         public async Task<ITransactionLogView> FindByTransactionHashAndLogIndexAsync(string hash, BigInteger logIndex)

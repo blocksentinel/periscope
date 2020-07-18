@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Exceptions;
 using Cinder.Core.Paging;
 using Cinder.Documents;
 using Cinder.Extensions;
@@ -17,23 +16,22 @@ namespace Cinder.Data.Repositories
         public AddressRepository(IMongoClient client, string databaseName) : base(client, databaseName,
             CollectionName.Addresses) { }
 
-        public async Task UpsertAddress(CinderAddress address, CancellationToken cancellationToken = default)
+        public Task UpsertAddress(CinderAddress address, CancellationToken cancellationToken = default)
         {
-            await UpsertDocumentAsync(address, cancellationToken).AnyContext();
+            return UpsertDocumentAsync(address, cancellationToken);
         }
 
-        public async Task BulkUpsertAddresses(IEnumerable<CinderAddress> addresses, CancellationToken cancellationToken = default)
+        public Task BulkUpsertAddresses(IEnumerable<CinderAddress> addresses, CancellationToken cancellationToken = default)
         {
-            await BulkUpsertDocumentAsync(addresses, cancellationToken).AnyContext();
+            return BulkUpsertDocumentAsync(addresses, cancellationToken);
         }
 
-        public async Task<CinderAddress> GetAddressByHash(string hash, CancellationToken cancellationToken = default)
+        public Task<CinderAddress> GetAddressByHash(string hash, CancellationToken cancellationToken = default)
         {
             hash = hash.ToLowerInvariant();
 
-            return await Collection.Find(Builders<CinderAddress>.Filter.Eq(document => document.Hash, hash))
-                .SingleOrDefaultAsync(cancellationToken)
-                .AnyContext();
+            return Collection.Find(Builders<CinderAddress>.Filter.Eq(document => document.Hash, hash))
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<string> GetAddressHashIfExists(string hash, CancellationToken cancellationToken = default)

@@ -9,16 +9,15 @@ namespace Cinder.Data.Repositories
 {
     public class AddressMetaRepository : RepositoryBase<CinderAddressMeta>, IAddressMetaRepository
     {
-        public AddressMetaRepository(IMongoClient client, string databaseName) :
-            base(client, databaseName, CollectionName.AddressMeta) { }
+        public AddressMetaRepository(IMongoClient client, string databaseName) : base(client, databaseName,
+            CollectionName.AddressMeta) { }
 
-        public async Task<CinderAddressMeta> GetByAddressOrDefault(string hash, CancellationToken cancellationToken = default)
+        public Task<CinderAddressMeta> GetByAddressOrDefault(string hash, CancellationToken cancellationToken = default)
         {
             hash = hash.ToLowerInvariant();
 
-            return await Collection.Find(Builders<CinderAddressMeta>.Filter.Eq(document => document.Hash, hash))
-                .SingleOrDefaultAsync(cancellationToken)
-                .AnyContext();
+            return Collection.Find(Builders<CinderAddressMeta>.Filter.Eq(document => document.Hash, hash))
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<CinderAddressMeta>> GetByAddresses(IEnumerable<string> hashes,

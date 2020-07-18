@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Core.Paging;
@@ -16,13 +16,13 @@ namespace Cinder.Data.Repositories
     {
         public BlockRepository(IMongoClient client, string databaseName) : base(client, databaseName, CollectionName.Blocks) { }
 
-        public async Task UpsertBlockAsync(Block source)
+        public Task UpsertBlockAsync(Block source)
         {
             CinderBlock document = source.MapToStorageEntityForUpsert<CinderBlock>();
             document.Sha3Uncles = source.Sha3Uncles;
             document.Uncles = source.Uncles;
             document.UncleCount = source.Uncles.Length;
-            await UpsertDocumentAsync(document).AnyContext();
+            return UpsertDocumentAsync(document);
         }
 
         public async Task<IBlockView> FindByBlockNumberAsync(HexBigInteger blockNumber)
@@ -57,13 +57,12 @@ namespace Cinder.Data.Repositories
             return new PagedEnumerable<CinderBlock>(blocks, (int) total, page ?? 1, size ?? 10);
         }
 
-        public async Task<CinderBlock> GetBlockByHash(string hash, CancellationToken cancellationToken = default)
+        public Task<CinderBlock> GetBlockByHash(string hash, CancellationToken cancellationToken = default)
         {
             hash = hash.ToLowerInvariant();
 
-            return await Collection.Find(Builders<CinderBlock>.Filter.Eq(document => document.Hash, hash))
-                .SingleOrDefaultAsync(cancellationToken)
-                .AnyContext();
+            return Collection.Find(Builders<CinderBlock>.Filter.Eq(document => document.Hash, hash))
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<string> GetBlockHashIfExists(string hash, CancellationToken cancellationToken = default)
@@ -77,11 +76,10 @@ namespace Cinder.Data.Repositories
             return result?.Hash;
         }
 
-        public async Task<CinderBlock> GetBlockByNumber(ulong number, CancellationToken cancellationToken = default)
+        public Task<CinderBlock> GetBlockByNumber(ulong number, CancellationToken cancellationToken = default)
         {
-            return await Collection.Find(Builders<CinderBlock>.Filter.Eq(document => document.BlockNumber, number.ToString()))
-                .SingleOrDefaultAsync(cancellationToken)
-                .AnyContext();
+            return Collection.Find(Builders<CinderBlock>.Filter.Eq(document => document.BlockNumber, number.ToString()))
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<string> GetBlockNumberIfExists(ulong number, CancellationToken cancellationToken = default)

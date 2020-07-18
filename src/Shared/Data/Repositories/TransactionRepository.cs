@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Core.Paging;
@@ -29,16 +29,15 @@ namespace Cinder.Data.Repositories
             return response;
         }
 
-        public async Task UpsertAsync(TransactionReceiptVO transactionReceiptVO, string code, bool failedCreatingContract)
+        public Task UpsertAsync(TransactionReceiptVO transactionReceiptVO, string code, bool failedCreatingContract)
         {
-            await UpsertDocumentAsync(
-                    transactionReceiptVO.MapToStorageEntityForUpsert<CinderTransaction>(code, failedCreatingContract))
-                .AnyContext();
+            return UpsertDocumentAsync(
+                transactionReceiptVO.MapToStorageEntityForUpsert<CinderTransaction>(code, failedCreatingContract));
         }
 
-        public async Task UpsertAsync(TransactionReceiptVO transactionReceiptVO)
+        public Task UpsertAsync(TransactionReceiptVO transactionReceiptVO)
         {
-            await UpsertDocumentAsync(transactionReceiptVO.MapToStorageEntityForUpsert<CinderTransaction>()).AnyContext();
+            return UpsertDocumentAsync(transactionReceiptVO.MapToStorageEntityForUpsert<CinderTransaction>());
         }
 
         public async Task<IPage<CinderTransaction>> GetTransactions(int? page = null, int? size = null,
@@ -64,13 +63,12 @@ namespace Cinder.Data.Repositories
             return new PagedEnumerable<CinderTransaction>(transactions, (int) total, page ?? 1, size ?? 10);
         }
 
-        public async Task<CinderTransaction> GetTransactionByHash(string hash, CancellationToken cancellationToken = default)
+        public Task<CinderTransaction> GetTransactionByHash(string hash, CancellationToken cancellationToken = default)
         {
             hash = hash.ToLowerInvariant();
 
-            return await Collection.Find(Builders<CinderTransaction>.Filter.Eq(document => document.Hash, hash))
-                .SingleOrDefaultAsync(cancellationToken)
-                .AnyContext();
+            return Collection.Find(Builders<CinderTransaction>.Filter.Eq(document => document.Hash, hash))
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<CinderTransaction>> GetTransactionsByBlockHash(string blockHash,

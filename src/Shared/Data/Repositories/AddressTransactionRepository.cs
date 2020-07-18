@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Core.Paging;
@@ -18,11 +18,10 @@ namespace Cinder.Data.Repositories
         public AddressTransactionRepository(IMongoClient client, string databaseName) : base(client, databaseName,
             CollectionName.AddressTransactions) { }
 
-        public async Task UpsertAsync(TransactionReceiptVO transactionReceiptVO, string address, string error = null,
+        public Task UpsertAsync(TransactionReceiptVO transactionReceiptVO, string address, string error = null,
             string newContractAddress = null)
         {
-            await UpsertDocumentAsync(transactionReceiptVO.MapToStorageEntityForUpsert<CinderAddressTransaction>(address))
-                .AnyContext();
+            return UpsertDocumentAsync(transactionReceiptVO.MapToStorageEntityForUpsert<CinderAddressTransaction>(address));
         }
 
         public async Task<IAddressTransactionView> FindAsync(string address, HexBigInteger blockNumber, string transactionHash)

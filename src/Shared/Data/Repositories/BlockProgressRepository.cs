@@ -11,11 +11,11 @@ namespace Cinder.Data.Repositories
         public BlockProgressRepository(IMongoClient client, string databaseName) : base(client, databaseName,
             CollectionName.BlockProgress) { }
 
-        public async Task UpsertProgressAsync(BigInteger blockNumber)
+        public Task UpsertProgressAsync(BigInteger blockNumber)
         {
             CinderBlockProgress block = new CinderBlockProgress {LastBlockProcessed = blockNumber.ToString()};
             block.UpdateRowDates();
-            await UpsertDocumentAsync(block).AnyContext();
+            return UpsertDocumentAsync(block);
         }
 
         public async Task<BigInteger?> GetLastBlockNumberProcessedAsync()
