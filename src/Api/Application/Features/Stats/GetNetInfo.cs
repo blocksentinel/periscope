@@ -19,6 +19,7 @@ namespace Cinder.Api.Application.Features.Stats
             public decimal AverageBlockTime { get; set; }
             public decimal AverageNetworkHashRate { get; set; }
             public decimal Difficulty { get; set; }
+            public int ConnectedPeerCount { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Model>
@@ -45,7 +46,8 @@ namespace Cinder.Api.Application.Features.Stats
                     BestBlockTimestamp = netInfo.BestBlockTimestamp,
                     AverageBlockTime = netInfo.AverageBlockTime,
                     AverageNetworkHashRate = netInfo.AverageNetworkHashRate,
-                    Difficulty = netInfo.Difficulty
+                    Difficulty = netInfo.Difficulty,
+                    ConnectedPeerCount = netInfo.ConnectedPeerCount
                 };
             }
         }
