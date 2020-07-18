@@ -31,41 +31,23 @@ namespace Cinder.Data
 
         public TRepository CreateRepository<TRepository>() where TRepository : IRepository
         {
-            IRepository repository;
-            switch (typeof(TRepository))
+            IRepository repository = typeof(TRepository) switch
             {
-                case var t when t == typeof(AddressRepository):
-                    repository = new AddressRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(AddressTransactionRepository):
-                    repository = new AddressTransactionRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(BlockProgressRepository):
-                    repository = new BlockProgressRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(BlockRepository):
-                    repository = new BlockRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(ContractRepository):
-                    repository = new ContractRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(TransactionLogRepository):
-                    repository = new TransactionLogRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(TransactionRepository):
-                    repository = new TransactionRepository(Client, DatabaseName);
-                    break;
-                case var t when t == typeof(AddressMetaRepository):
-                    repository = new AddressMetaRepository(Client, DatabaseName);
-                    break;
-                default:
-                    throw new NotImplementedException($"Repository not implemented for type {typeof(TRepository).Name}");
-            }
+                var t when t == typeof(AddressRepository) => new AddressRepository(Client, DatabaseName),
+                var t when t == typeof(AddressTransactionRepository) => new AddressTransactionRepository(Client, DatabaseName),
+                var t when t == typeof(BlockProgressRepository) => new BlockProgressRepository(Client, DatabaseName),
+                var t when t == typeof(BlockRepository) => new BlockRepository(Client, DatabaseName),
+                var t when t == typeof(ContractRepository) => new ContractRepository(Client, DatabaseName),
+                var t when t == typeof(TransactionLogRepository) => new TransactionLogRepository(Client, DatabaseName),
+                var t when t == typeof(TransactionRepository) => new TransactionRepository(Client, DatabaseName),
+                var t when t == typeof(AddressMetaRepository) => new AddressMetaRepository(Client, DatabaseName),
+                _ => throw new NotImplementedException($"Repository not implemented for type {typeof(TRepository).Name}")
+            };
 
             return (TRepository) repository;
         }
 
-        protected void CreateMaps()
+        protected static void CreateMaps()
         {
             BsonClassMap.RegisterClassMap<TableRow>(map =>
             {

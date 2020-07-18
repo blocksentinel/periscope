@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Core.Paging;
@@ -73,17 +73,13 @@ namespace Cinder.Data.Repositories
             IFindFluent<CinderAddressTransaction, CinderAddressTransaction> query = AddressHashBaseQuery(addressHash);
             // NOTE: Hard cap to 10k records to avoid performance issues, needs further investigation
             long total = await query.Limit(10000).CountDocumentsAsync(cancellationToken).AnyContext();
-            query = query.Skip((page.Value - 1) * size.Value).Limit(size.Value);
 
-            switch (sort)
+            query = sort switch
             {
-                case SortOrder.Ascending:
-                    query = query.SortBy(transaction => transaction.BlockNumber);
-                    break;
-                case SortOrder.Descending:
-                    query = query.SortByDescending(transaction => transaction.BlockNumber);
-                    break;
-            }
+                SortOrder.Ascending => query.SortBy(transaction => transaction.BlockNumber),
+                SortOrder.Descending => query.SortByDescending(transaction => transaction.BlockNumber),
+                _ => query.Skip((page.Value - 1) * size.Value).Limit(size.Value)
+            };
 
             List<string> transactions =
                 await query.Project(document => document.Hash).ToListAsync(cancellationToken).AnyContext();

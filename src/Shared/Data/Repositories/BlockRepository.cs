@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinder.Core.Paging;
@@ -42,15 +42,12 @@ namespace Cinder.Data.Repositories
                 .Skip(((page ?? 1) - 1) * (size ?? 10))
                 .Limit(size ?? 10);
 
-            switch (sort)
+            query = sort switch
             {
-                case SortOrder.Ascending:
-                    query = query.SortBy(block => block.Id);
-                    break;
-                case SortOrder.Descending:
-                    query = query.SortByDescending(block => block.Id);
-                    break;
-            }
+                SortOrder.Ascending => query.SortBy(block => block.Id),
+                SortOrder.Descending => query.SortByDescending(block => block.Id),
+                _ => query
+            };
 
             List<CinderBlock> blocks = await query.ToListAsync(cancellationToken).AnyContext();
 
