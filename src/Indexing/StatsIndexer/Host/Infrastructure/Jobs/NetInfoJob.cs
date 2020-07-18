@@ -37,6 +37,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
                 netInfo.Difficulty = await _netInfoService.GetDifficulty(block.Difficulty).AnyContext();
                 netInfo.AverageBlockTime = await _netInfoService.GetAverageBlockTime(block.Timestamp).AnyContext();
                 netInfo.AverageNetworkHashRate = await _netInfoService.GetAverageNetworkHashRate(block.Difficulty).AnyContext();
+                netInfo.ConnectedPeerCount = await _netInfoService.GetConnectedPeerCount().AnyContext();
 
                 await _statsCache.SetAsync(NetInfo.DefaultCacheKey, netInfo).AnyContext();
             }

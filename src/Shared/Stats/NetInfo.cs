@@ -8,5 +8,6 @@
         public decimal AverageBlockTime { get; set; }
         public decimal AverageNetworkHashRate { get; set; }
         public decimal Difficulty { get; set; }
+        public int ConnectedPeerCount { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cinder.Extensions;
 using Foundatio.Caching;
+using Nethereum.Parity;
+using Newtonsoft.Json.Linq;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
 {
@@ -12,16 +14,19 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
         private const string NetworkHashRateCacheKey = "NetworkHashRate";
         private const string AverageBlockTimeCacheKey = "AverageBlockTime";
         private readonly ICacheClient _memoryCache;
+        private readonly IWeb3Parity _web3;
 
-        public NetInfoService()
+        public NetInfoService(IWeb3Parity web3)
         {
+            _web3 = web3;
             _memoryCache = new InMemoryCacheClient();
         }
 
         public async Task<decimal> GetAverageBlockTime(ulong timestamp)
         {
             decimal averageBlockTime = 0;
-            ICollection<long> timestamps = await _memoryCache.GetAsync<ICollection<long>>(TimestampCacheKey, new List<long>());
+            ICollection<long> timestamps =
+                await _memoryCache.GetAsync<ICollection<long>>(TimestampCacheKey, new List<long>()).AnyContext();
 
             timestamps.Add((long) timestamp);
             timestamps = timestamps.OrderBy(t => t).ToList();
@@ -50,14 +55,9 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
             return averageBlockTime;
         }
 
-        public async Task<decimal> GetDifficulty(ulong difficulty)
+        public Task<decimal> GetDifficulty(ulong difficulty)
         {
-            if (difficulty == 0)
-            {
-                return difficulty;
-            }
-
-            return await Task.FromResult(difficulty / ((decimal) 1000 * 1000 * 1000)).AnyContext();
+            return difficulty == 0 ? Task.FromResult(0m) : Task.FromResult(difficulty / ((decimal) 1000 * 1000 * 1000));
         }
 
         public async Task<decimal> GetAverageNetworkHashRate(ulong difficulty)
@@ -75,7 +75,7 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
             }
 
             ICollection<long> networkHashRate =
-                await _memoryCache.GetAsync<ICollection<long>>(NetworkHashRateCacheKey, new List<long>());
+                await _memoryCache.GetAsync<ICollection<long>>(NetworkHashRateCacheKey, new List<long>()).AnyContext();
 
             networkHashRate.Add((long) difficulty);
 
@@ -87,6 +87,14 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
                 .AnyContext();
 
             return averageNetworkHashRate;
+        }
+
+        public async Task<int> GetConnectedPeerCount()
+        {
+            JObject peers = await _web3.Network.NetPeers.SendRequestAsync().AnyContext();
+            JToken token = peers.SelectToken("connected");
+
+            return token?.Value<int>() ?? 0;
         }
     }
 }
