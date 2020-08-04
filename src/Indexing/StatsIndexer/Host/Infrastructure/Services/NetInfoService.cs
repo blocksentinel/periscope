@@ -89,12 +89,9 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
             return averageNetworkHashRate;
         }
 
-        public async Task<int> GetConnectedPeerCount()
+        public Task<int> GetConnectedPeerCount()
         {
-            JObject peers = await _web3.Network.NetPeers.SendRequestAsync().AnyContext();
-            JToken token = peers.SelectToken("connected");
-
-            return token?.Value<int>() ?? 0;
+            return Task.FromResult(0);
         }
     }
 }
