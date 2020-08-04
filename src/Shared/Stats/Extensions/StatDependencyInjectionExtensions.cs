@@ -8,7 +8,7 @@ using StackExchange.Redis;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Stat
+    public static class StatDependencyInjectionExtensions
     {
         public static void AddStats(this IServiceCollection services)
         {

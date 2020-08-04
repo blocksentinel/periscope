@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Validation
+    public static class ValidationDependencyInjectionExtensions
     {
         public static IMvcBuilder AddValidation(this IMvcBuilder builder)
         {

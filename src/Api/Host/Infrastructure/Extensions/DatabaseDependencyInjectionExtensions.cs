@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Database
+    public static class DatabaseDependencyInjectionExtensions
     {
         public static void AddDatabase(this IServiceCollection services)
         {

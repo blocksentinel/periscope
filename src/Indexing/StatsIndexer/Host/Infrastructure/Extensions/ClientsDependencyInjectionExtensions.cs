@@ -6,7 +6,7 @@ using Refit;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Client
+    public static class ClientDependencyInjectionExtensions
     {
         public static void AddClients(this IServiceCollection services)
         {

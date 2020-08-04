@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Mediator
+    public static class MediatorDependencyInjectionExtensions
     {
         public static void AddMediator(this IServiceCollection services)
         {

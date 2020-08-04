@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 // ReSharper disable once CheckNamespace
 namespace Cinder.Extensions.DependencyInjection
 {
-    public static class Event
+    public static class EventDependencyInjectionExtensions
     {
         public static void AddEvents(this IServiceCollection services)
         {
