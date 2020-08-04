@@ -13,9 +13,9 @@ using Foundatio.Jobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Nethereum.Hex.HexTypes;
-using Nethereum.Parity;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Util;
+using Nethereum.Web3;
 
 namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
 {
@@ -24,10 +24,10 @@ namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
         private readonly IAddressRepository _addressRepository;
         private readonly AddressRefresherSettings _settings;
         private readonly ScopedHybridCacheClient _statsCache;
-        private readonly IWeb3Parity _web3;
+        private readonly IWeb3 _web3;
 
         public AddressRefresherJob(ILoggerFactory loggerFactory, IOptions<AddressRefresherSettings> settings,
-            IHybridCacheClient cacheClient, IAddressRepository addressRepository, IWeb3Parity web3) : base(loggerFactory)
+            IHybridCacheClient cacheClient, IAddressRepository addressRepository, IWeb3 web3) : base(loggerFactory)
         {
             _settings = settings.Value;
             _addressRepository = addressRepository;

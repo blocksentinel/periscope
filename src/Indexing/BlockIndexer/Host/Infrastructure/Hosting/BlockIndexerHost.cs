@@ -9,7 +9,7 @@ using Foundatio.Utility;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Nethereum.BlockchainProcessing;
-using Nethereum.Parity;
+using Nethereum.Web3;
 
 namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.Hosting
 {
@@ -21,10 +21,10 @@ namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.Hosting
         private readonly CinderFilterLogStorageStepHandler _filterLogStorageStepHandler;
         private readonly ILogger<BlockIndexerHost> _logger;
         private readonly CinderTransactionReceiptStorageStepHandler _transactionReceiptStorageStepHandler;
-        private readonly IWeb3Parity _web3;
+        private readonly IWeb3 _web3;
 
-        public BlockIndexerHost(ILogger<BlockIndexerHost> logger, IWeb3Parity web3,
-            IBlockProgressRepository blockProgressRepository, CinderBlockStorageStepHandler blockStorageStepHandler,
+        public BlockIndexerHost(ILogger<BlockIndexerHost> logger, IWeb3 web3, IBlockProgressRepository blockProgressRepository,
+            CinderBlockStorageStepHandler blockStorageStepHandler,
             CinderContractCreationStorageStepHandler contractCreationStorageStepHandler,
             CinderFilterLogStorageStepHandler filterLogStorageStepHandler,
             CinderTransactionReceiptStorageStepHandler transactionReceiptStorageStepHandler)

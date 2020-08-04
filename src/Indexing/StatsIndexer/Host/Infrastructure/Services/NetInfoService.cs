@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cinder.Extensions;
 using Foundatio.Caching;
-using Nethereum.Parity;
+using Nethereum.Web3;
 using Newtonsoft.Json.Linq;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
@@ -14,9 +14,9 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
         private const string NetworkHashRateCacheKey = "NetworkHashRate";
         private const string AverageBlockTimeCacheKey = "AverageBlockTime";
         private readonly ICacheClient _memoryCache;
-        private readonly IWeb3Parity _web3;
+        private readonly IWeb3 _web3;
 
-        public NetInfoService(IWeb3Parity web3)
+        public NetInfoService(IWeb3 web3)
         {
             _web3 = web3;
             _memoryCache = new InMemoryCacheClient();
