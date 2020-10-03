@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +48,8 @@ namespace Cinder.Api.Application.Features.Block
             public string[] Uncles { get; set; }
             public ulong UncleCount { get; set; }
             public string Sha3Uncles { get; set; }
+            public decimal Value { get; set; }
+            public decimal Fees { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, IPage<Model>>
@@ -87,7 +89,9 @@ namespace Cinder.Api.Application.Features.Block
                     TotalDifficulty = block.TotalDifficulty,
                     Uncles = block.Uncles,
                     UncleCount = (ulong) block.UncleCount,
-                    Sha3Uncles = block.Sha3Uncles
+                    Sha3Uncles = block.Sha3Uncles,
+                    Value = block.Value,
+                    Fees = block.Fees
                 });
 
                 return new PagedEnumerable<Model>(models, page.Total, page.Page, page.Size);

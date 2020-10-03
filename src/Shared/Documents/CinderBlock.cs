@@ -9,6 +9,8 @@ namespace Cinder.Documents
         public long UncleCount { get; set; }
         public string[] Uncles { get; set; }
         public string Sha3Uncles { get; set; }
+        public decimal Value { get; set; }
+        public decimal Fees { get; set; }
 
         public string Id
         {
