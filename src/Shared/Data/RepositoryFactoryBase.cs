@@ -25,7 +25,6 @@ namespace Cinder.Data
                 ReadEncoding = new UTF8Encoding(false, false)
             });
 
-
             CreateMaps();
         }
 

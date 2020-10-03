@@ -13,12 +13,9 @@ namespace Cinder.Extensions
 
             foreach (TSource item in source)
             {
-                if (bucket == null)
-                {
-                    bucket = new TSource[size];
-                }
-
+                bucket ??= new TSource[size];
                 bucket[count++] = item;
+
                 if (count != size)
                 {
                     continue;

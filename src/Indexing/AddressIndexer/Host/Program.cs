@@ -2,13 +2,13 @@ using System.IO;
 using System.Threading.Tasks;
 using Cinder.Extensions;
 using Cinder.Extensions.DependencyInjection;
+using Cinder.Indexing.AddressIndexer.Host.Infrastructure.Hosting;
 using Cinder.Indexing.HostBase;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure
+namespace Cinder.Indexing.AddressIndexer.Host
 {
     public class Program
     {
@@ -23,16 +23,16 @@ namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure
             return await HostWrapper.Create(builder => builder.ConfigureServices((hostContext, services) =>
                 {
                     services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
-                    services.AddHostedService<StatsIndexerHost>();
+                    services.AddHostedService<AddressIndexerHost>();
                     services.AddOptions(Configuration);
-                    services.AddClients();
+                    services.AddCustomOptions(Configuration);
                     services.AddDatabase();
                     services.AddEvents();
                     services.AddJobs();
                     services.AddStats();
                     services.AddWeb3();
                 }))
-                .Run("Stats Indexer", Configuration)
+                .Run("Address Indexer", Configuration)
                 .AnyContext();
         }
     }

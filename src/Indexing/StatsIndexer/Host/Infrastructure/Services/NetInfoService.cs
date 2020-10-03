@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Cinder.Extensions;
 using Foundatio.Caching;
 using Nethereum.Web3;
-using Newtonsoft.Json.Linq;
 
 namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
 {

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure
+namespace Cinder.Indexing.BlockIndexer.Host
 {
     public class Program
     {
