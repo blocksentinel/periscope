@@ -61,14 +61,14 @@ namespace Cinder.Api.Search
             }
             else if (ulong.TryParse(query, out ulong blockNumber))
             {
-                string result = await _blockRepository.GetBlockNumberIfExists(blockNumber).AnyContext();
+                string result = await _blockRepository.GetBlockHashByBlockNumberIfExists(blockNumber).AnyContext();
                 if (string.IsNullOrEmpty(result))
                 {
                     return searchResult;
                 }
 
                 searchResult.Id = result;
-                searchResult.Type = SearchResultType.BlockNumber;
+                searchResult.Type = SearchResultType.BlockHash;
             }
 
             return searchResult;

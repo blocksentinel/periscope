@@ -13,7 +13,7 @@ namespace Cinder.Data.Repositories
         Task<CinderBlock> GetBlockByHash(string hash, CancellationToken cancellationToken = default);
         Task<string> GetBlockHashIfExists(string hash, CancellationToken cancellationToken = default);
         Task<CinderBlock> GetBlockByNumber(ulong number, CancellationToken cancellationToken = default);
-        Task<string> GetBlockNumberIfExists(ulong number, CancellationToken cancellationToken = default);
+        Task<string> GetBlockHashByBlockNumberIfExists(ulong number, CancellationToken cancellationToken = default);
         Task<ulong> GetBlocksMinedCountByAddressHash(string addressHash, CancellationToken cancellationToken = default);
     }
 }

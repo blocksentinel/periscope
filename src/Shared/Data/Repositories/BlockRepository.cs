@@ -79,15 +79,15 @@ namespace Cinder.Data.Repositories
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<string> GetBlockNumberIfExists(ulong number, CancellationToken cancellationToken = default)
+        public async Task<string> GetBlockHashByBlockNumberIfExists(ulong number, CancellationToken cancellationToken = default)
         {
             var result = await Collection
                 .Find(Builders<CinderBlock>.Filter.Eq(document => document.BlockNumber, number.ToString()))
-                .Project(block => new {block.BlockNumber})
+                .Project(block => new {block.Hash})
                 .SingleOrDefaultAsync(cancellationToken)
                 .AnyContext();
 
-            return result?.BlockNumber;
+            return result?.Hash;
         }
 
         public async Task<ulong> GetBlocksMinedCountByAddressHash(string addressHash,
