@@ -20,8 +20,8 @@ namespace Cinder.Api.Application.Features.Stats
         {
             public Validator()
             {
-                RuleFor(m => m.Page).GreaterThanOrEqualTo(1).LessThanOrEqualTo(1000);
-                RuleFor(m => m.Size).GreaterThanOrEqualTo(1).LessThanOrEqualTo(100);
+                RuleFor(m => m.Page).GreaterThanOrEqualTo(1);
+                RuleFor(m => m.Size).InclusiveBetween(1, 100);
             }
         }
 

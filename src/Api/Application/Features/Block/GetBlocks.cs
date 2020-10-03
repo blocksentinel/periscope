@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +17,8 @@ namespace Cinder.Api.Application.Features.Block
         {
             public Validator()
             {
-                RuleFor(m => m.Page).GreaterThanOrEqualTo(1).LessThanOrEqualTo(1000);
-                RuleFor(m => m.Size).GreaterThanOrEqualTo(1).LessThanOrEqualTo(100);
+                RuleFor(m => m.Page).GreaterThanOrEqualTo(1);
+                RuleFor(m => m.Size).InclusiveBetween(1, 100);
             }
         }
 

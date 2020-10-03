@@ -19,7 +19,7 @@ namespace Cinder.Api.Application.Features.Transaction
             public Validator()
             {
                 RuleFor(m => m.AddressHash).NotEmpty().Length(42);
-                RuleFor(m => m.Size).GreaterThanOrEqualTo(1).LessThanOrEqualTo(100);
+                RuleFor(m => m.Size).InclusiveBetween(1, 100);
             }
         }
 
