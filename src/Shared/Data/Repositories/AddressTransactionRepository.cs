@@ -78,8 +78,10 @@ namespace Cinder.Data.Repositories
             {
                 SortOrder.Ascending => query.SortBy(transaction => transaction.BlockNumber),
                 SortOrder.Descending => query.SortByDescending(transaction => transaction.BlockNumber),
-                _ => query.Skip((page.Value - 1) * size.Value).Limit(size.Value)
+                _ => throw new System.NotImplementedException()
             };
+
+            query = query.Skip((page.Value - 1) * size.Value).Limit(size.Value);
 
             List<string> transactions =
                 await query.Project(document => document.Hash).ToListAsync(cancellationToken).AnyContext();
