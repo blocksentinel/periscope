@@ -1,4 +1,4 @@
-﻿namespace Cinder.Events
+﻿namespace Periscope.Events
 {
     public class AddressesTransactedEvent
     {

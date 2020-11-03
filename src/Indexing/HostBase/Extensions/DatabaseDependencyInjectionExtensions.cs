@@ -1,11 +1,10 @@
-﻿using Cinder.Core.SharedKernel;
-using Cinder.Data.Repositories;
-using Cinder.Indexing.HostBase.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Periscope.Core.SharedKernel;
+using Periscope.Data.Repositories;
+using Periscope.Indexing.HostBase.Repositories;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Indexing.HostBase.Extensions
 {
     public static class DatabaseDependencyInjectionExtensions
     {

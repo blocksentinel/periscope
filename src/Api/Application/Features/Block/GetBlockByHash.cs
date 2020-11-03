@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Data.Repositories;
-using Cinder.Documents;
-using Cinder.Extensions;
 using FluentValidation;
 using MediatR;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
+using Periscope.Documents;
 
-namespace Cinder.Api.Application.Features.Block
+namespace Periscope.Api.Application.Features.Block
 {
     public class GetBlockByHash
     {

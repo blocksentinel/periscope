@@ -1,4 +1,4 @@
-﻿namespace Cinder.Api.Search
+﻿namespace Periscope.Api.Search
 {
     public class SearchResult
     {

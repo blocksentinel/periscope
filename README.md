@@ -1,19 +1,14 @@
-# Cinder
+# Periscope
 
-An indexer and API for Ethereum networks.
+An indexer and API for EVM-based networks.
 
-![GitHub](https://img.shields.io/github/license/majordutch/cinder)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
-
-## Frontend for Cinder
-
- - [Cinder UI](https://github.com/majordutch/cinder-ui)
+![GitHub](https://img.shields.io/github/license/blocksentinel/periscope)
 
 ## Showcase
 
 * [Ellaism Blockchain Explorer](https://explorer.ellaism.io)
 
-If your network uses Cinder, open a PR to be included here.
+If your network uses Periscope, open a PR to be included here.
 
 ## Thanks and Credits
 
@@ -30,5 +25,5 @@ review the [guidelines for contributing](CONTRIBUTING.md).
 
 ## License
 
-This project is released under the terms of the MIT license. See [LICENSE](LICENSE) 
-for more information or see https://opensource.org/licenses/MIT.
+This project is released under the terms of the Apache License, Version 2.0. See [LICENSE](LICENSE) 
+for more information or see https://opensource.org/licenses/Apache-2.0.

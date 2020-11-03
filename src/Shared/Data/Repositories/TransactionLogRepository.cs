@@ -1,13 +1,13 @@
 ﻿using System.Numerics;
 using System.Threading.Tasks;
-using Cinder.Documents;
-using Cinder.Extensions;
 using MongoDB.Driver;
 using Nethereum.BlockchainProcessing.BlockStorage.Entities;
 using Nethereum.BlockchainProcessing.BlockStorage.Entities.Mapping;
 using Nethereum.RPC.Eth.DTOs;
+using Periscope.Core.Extensions;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public class TransactionLogRepository : RepositoryBase<CinderTransactionLog>, ITransactionLogRepository
     {

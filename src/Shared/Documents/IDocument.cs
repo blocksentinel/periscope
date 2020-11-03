@@ -1,4 +1,4 @@
-﻿namespace Cinder.Documents
+﻿namespace Periscope.Documents
 {
     public interface IDocument
     {

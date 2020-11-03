@@ -1,8 +1,8 @@
-﻿using Cinder.Documents;
-using Cinder.Extensions;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
+using Periscope.Data.Extensions;
+using Periscope.Documents;
 
-namespace Cinder.Data.IndexBuilders
+namespace Periscope.Data.IndexBuilders
 {
     public abstract class BaseIndexBuilder<TDocument> : IIndexBuilder where TDocument : IDocument
     {

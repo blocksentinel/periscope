@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cinder.Documents
+namespace Periscope.Documents
 {
     public class CinderAddressMeta : IDocument
     {

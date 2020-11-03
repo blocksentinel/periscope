@@ -1,4 +1,4 @@
-﻿namespace Cinder.Core.SharedKernel
+﻿namespace Periscope.Core.SharedKernel
 {
     public interface ISettings
     {
@@ -6,5 +6,6 @@
         IDatabaseSettings Database { get; set; }
         INodeSettings Node { get; set; }
         IRedisSettings Redis { get; set; }
+        IPerformanceSettings Performance { get; set; }
     }
 }

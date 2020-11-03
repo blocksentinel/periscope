@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cinder.Core.Paging
+namespace Periscope.Core.Paging
 {
     public interface IPage<out T>
     {

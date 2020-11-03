@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Cinder.Api.Application.Features.Address;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Periscope.Api.Application.Features.Address;
 
-namespace Cinder.Api.Host.Controllers
+namespace Periscope.Api.Host.Controllers
 {
     public class AddressController : BaseController
     {

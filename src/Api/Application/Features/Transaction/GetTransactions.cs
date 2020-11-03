@@ -3,15 +3,15 @@ using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Data.Repositories;
-using Cinder.Documents;
-using Cinder.Extensions;
 using FluentValidation;
 using MediatR;
 using Nethereum.Util;
+using Periscope.Core.Extensions;
+using Periscope.Core.Paging;
+using Periscope.Data.Repositories;
+using Periscope.Documents;
 
-namespace Cinder.Api.Application.Features.Transaction
+namespace Periscope.Api.Application.Features.Transaction
 {
     public class GetTransactions
     {

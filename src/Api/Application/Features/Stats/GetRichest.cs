@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Core.SharedKernel;
-using Cinder.Data.Repositories;
-using Cinder.Documents;
-using Cinder.Extensions;
-using Cinder.Stats;
 using FluentValidation;
 using Foundatio.Caching;
 using MediatR;
+using Microsoft.Extensions.Options;
+using Periscope.Core.Extensions;
+using Periscope.Core.Paging;
+using Periscope.Core.SharedKernel;
+using Periscope.Data.Repositories;
+using Periscope.Documents;
+using Periscope.Stats;
 
-namespace Cinder.Api.Application.Features.Stats
+namespace Periscope.Api.Application.Features.Stats
 {
     public class GetRichest
     {
@@ -46,21 +47,24 @@ namespace Cinder.Api.Application.Features.Stats
         {
             private readonly IAddressMetaRepository _addressMetaRepository;
             private readonly IAddressRepository _addressRepository;
+            private readonly Settings _settings;
             private readonly ScopedHybridCacheClient _statsCache;
 
             public Handler(IAddressRepository addressRepository, IAddressMetaRepository addressMetaRepository,
-                IHybridCacheClient cacheClient)
+                IHybridCacheClient cacheClient, IOptions<Settings> options)
             {
                 _addressRepository = addressRepository;
                 _addressMetaRepository = addressMetaRepository;
                 _statsCache = new ScopedHybridCacheClient(cacheClient, CacheScopes.Stats);
+                _settings = options.Value;
             }
 
             public async Task<IPage<Model>> Handle(Query request, CancellationToken cancellationToken)
             {
                 CirculatingSupply supply = await _statsCache.GetAsync<CirculatingSupply>(CirculatingSupply.DefaultCacheKey, null)
                     .AnyContext();
-                IPage<CinderAddress> page = await _addressRepository.GetRichest(request.Page, request.Size, cancellationToken)
+                IPage<CinderAddress> page = await _addressRepository.GetRichest(request.Page, request.Size,
+                        _settings.Performance.RichListMinimumBalance, _settings.Performance.QueryCountLimiter, cancellationToken)
                     .AnyContext();
                 IEnumerable<CinderAddressMeta> metas = await _addressMetaRepository
                     .GetByAddresses(page.Items.Select(address => address.Hash).Distinct(), cancellationToken)

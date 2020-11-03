@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Cinder.Core;
-using Cinder.Core.Exceptions;
-using Cinder.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Periscope.Core;
+using Periscope.Core.Exceptions;
+using Periscope.Core.Extensions;
 using Serilog;
 
-namespace Cinder.Api.Host.Infrastructure
+namespace Periscope.Api.Host
 {
     public class Program
     {

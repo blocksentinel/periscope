@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Documents;
-using Cinder.Extensions;
 using MongoDB.Driver;
+using Periscope.Core.Extensions;
+using Periscope.Data.Extensions;
+using Periscope.Documents;
 
-namespace Cinder.Data
+namespace Periscope.Data
 {
     public abstract class RepositoryBase<TDocument> : IRepository where TDocument : IDocument
     {

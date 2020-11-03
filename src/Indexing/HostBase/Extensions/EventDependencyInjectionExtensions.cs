@@ -1,11 +1,10 @@
-﻿using Cinder.Core.SharedKernel;
-using Foundatio.Messaging;
+﻿using Foundatio.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Periscope.Core.SharedKernel;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Indexing.HostBase.Extensions
 {
     public static class EventDependencyInjectionExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Cinder.Core
+namespace Periscope.Core
 {
     public static class VersionInfo
     {

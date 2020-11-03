@@ -1,12 +1,11 @@
-﻿using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
-using Foundatio.Queues;
+﻿using Foundatio.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Services;
 using StackExchange.Redis;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Extensions
 {
     public static class JobDependencyInjectionExtensions
     {

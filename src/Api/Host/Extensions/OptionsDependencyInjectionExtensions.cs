@@ -1,9 +1,8 @@
-﻿using Cinder.Core.SharedKernel;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Periscope.Core.SharedKernel;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Api.Host.Extensions
 {
     public static class OptionsDependencyInjectionExtensions
     {

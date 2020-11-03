@@ -1,14 +1,16 @@
 using System.IO;
 using System.Threading.Tasks;
-using Cinder.Extensions;
-using Cinder.Extensions.DependencyInjection;
-using Cinder.Indexing.AddressIndexer.Host.Infrastructure.Hosting;
-using Cinder.Indexing.HostBase;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Periscope.Core.Extensions;
+using Periscope.Indexing.AddressIndexer.Host.Infrastructure.Extensions;
+using Periscope.Indexing.AddressIndexer.Host.Infrastructure.Hosting;
+using Periscope.Indexing.HostBase;
+using Periscope.Indexing.HostBase.Extensions;
+using Periscope.Stats.Extensions;
 
-namespace Cinder.Indexing.AddressIndexer.Host
+namespace Periscope.Indexing.AddressIndexer.Host
 {
     public class Program
     {

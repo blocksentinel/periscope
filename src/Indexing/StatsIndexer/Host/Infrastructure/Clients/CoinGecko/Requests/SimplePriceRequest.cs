@@ -1,6 +1,6 @@
 ﻿using Refit;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Requests
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Requests
 {
     public class SimplePriceRequest
     {

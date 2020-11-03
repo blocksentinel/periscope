@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Documents;
+using Periscope.Core.Paging;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public interface IBlockRepository : Nethereum.BlockchainProcessing.BlockStorage.Repositories.IBlockRepository
     {

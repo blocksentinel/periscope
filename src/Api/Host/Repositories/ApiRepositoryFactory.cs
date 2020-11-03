@@ -1,7 +1,7 @@
-﻿using Cinder.Core.SharedKernel;
-using Cinder.Data;
+﻿using Periscope.Core.SharedKernel;
+using Periscope.Data;
 
-namespace Cinder.Api.Host.Infrastructure.Repositories
+namespace Periscope.Api.Host.Repositories
 {
     public class ApiRepositoryFactory : RepositoryFactoryBase, IApiRepositoryFactory
     {

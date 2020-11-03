@@ -1,9 +1,8 @@
-﻿using Cinder.Api.Application.Behaviors;
-using FluentValidation.AspNetCore;
+﻿using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Periscope.Api.Application.Behaviors;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Api.Host.Extensions
 {
     public static class ValidationDependencyInjectionExtensions
     {

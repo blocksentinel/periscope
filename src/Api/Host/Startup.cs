@@ -1,12 +1,13 @@
-﻿using Cinder.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Periscope.Api.Host.Extensions;
+using Periscope.Stats.Extensions;
 using Serilog;
 
-namespace Cinder.Api.Host.Infrastructure
+namespace Periscope.Api.Host
 {
     public class Startup
     {

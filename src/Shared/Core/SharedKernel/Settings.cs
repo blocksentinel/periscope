@@ -1,4 +1,4 @@
-﻿namespace Cinder.Core.SharedKernel
+﻿namespace Periscope.Core.SharedKernel
 {
     public class Settings : ISettings
     {
@@ -6,6 +6,7 @@
         public IDatabaseSettings Database { get; set; } = new DatabaseSettings();
         public INodeSettings Node { get; set; } = new NodeSettings();
         public IRedisSettings Redis { get; set; } = new RedisSettings();
+        public IPerformanceSettings Performance { get; set; } = new PerformanceSettings();
 
         public class BusSettings : IBusSettings
         {
@@ -28,6 +29,12 @@
         public class RedisSettings : IRedisSettings
         {
             public string ConnectionString { get; set; }
+        }
+
+        public class PerformanceSettings : IPerformanceSettings
+        {
+            public int QueryCountLimiter { get; set; }
+            public int RichListMinimumBalance { get; set; }
         }
     }
 }

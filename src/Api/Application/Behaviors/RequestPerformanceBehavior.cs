@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Periscope.Core.Extensions;
 
-namespace Cinder.Api.Application.Behaviors
+namespace Periscope.Api.Application.Behaviors
 {
     public class RequestPerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {

@@ -1,11 +1,10 @@
-﻿using Cinder.Api.Application;
-using Cinder.Api.Application.Behaviors;
-using MediatR;
+﻿using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
+using Periscope.Api.Application;
+using Periscope.Api.Application.Behaviors;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Api.Host.Extensions
 {
     public static class MediatorDependencyInjectionExtensions
     {

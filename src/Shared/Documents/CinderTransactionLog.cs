@@ -1,6 +1,6 @@
 ﻿using Nethereum.BlockchainProcessing.BlockStorage.Entities;
 
-namespace Cinder.Documents
+namespace Periscope.Documents
 {
     public class CinderTransactionLog : TransactionLog, IDocument
     {

@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cinder.Data.Repositories;
-using Cinder.Events;
-using Cinder.Extensions;
 using Foundatio.Messaging;
 using Microsoft.Extensions.Logging;
 using Nethereum.BlockchainProcessing.BlockStorage.BlockStorageStepsHandlers;
 using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
+using Periscope.Events;
 
-namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
+namespace Periscope.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 {
     public class CinderBlockStorageStepHandler : BlockStorageStepHandler
     {

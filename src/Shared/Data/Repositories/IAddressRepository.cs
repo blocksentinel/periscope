@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Documents;
+using Periscope.Core.Paging;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public interface IAddressRepository : IRepository
     {
@@ -16,7 +16,9 @@ namespace Cinder.Data.Repositories
         Task<IEnumerable<CinderAddress>> GetStaleAddresses(int age = 5, int limit = 1000,
             CancellationToken cancellationToken = default);
 
-        Task<IPage<CinderAddress>> GetRichest(int? page, int? size, CancellationToken cancellationToken = default);
+        Task<IPage<CinderAddress>> GetRichest(int? page, int? size, int minimumBalance = 0, int queryCountLimiter = 10000,
+            CancellationToken cancellationToken = default);
+
         Task<decimal> GetSupply(CancellationToken cancellationToken = default);
         Task<bool> AddressExists(string hash, CancellationToken cancellationToken = default);
     }

@@ -1,7 +1,7 @@
 ﻿using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
 
-namespace Cinder.Events
+namespace Periscope.Events
 {
     public class BlockFoundEvent
     {

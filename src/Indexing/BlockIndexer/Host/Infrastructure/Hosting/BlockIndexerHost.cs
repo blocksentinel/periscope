@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Exceptions;
-using Cinder.Data.Repositories;
-using Cinder.Extensions;
-using Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers;
 using Foundatio.Utility;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Nethereum.BlockchainProcessing;
 using Nethereum.Web3;
+using Periscope.Core.Exceptions;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
+using Periscope.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers;
 
-namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.Hosting
+namespace Periscope.Indexing.BlockIndexer.Host.Infrastructure.Hosting
 {
     public class BlockIndexerHost : BackgroundService
     {

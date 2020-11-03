@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Documents;
-using Cinder.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Nethereum.BlockchainProcessing.BlockStorage.Entities;
 using Nethereum.BlockchainProcessing.BlockStorage.Entities.Mapping;
 using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
+using Periscope.Core.Extensions;
+using Periscope.Core.Paging;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public class AddressTransactionRepository : RepositoryBase<CinderAddressTransaction>, IAddressTransactionRepository
     {
@@ -49,6 +50,31 @@ namespace Cinder.Data.Repositories
             return records;
         }
 
+        public async Task<IPage<string>> GetPagedTransactionHashesByAddressHash(string addressHash, int? page = null,
+            int? size = null, SortOrder sort = SortOrder.Ascending, int queryCountLimiter = 10000,
+            CancellationToken cancellationToken = default)
+        {
+            page ??= 1;
+            size ??= 10;
+
+            IFindFluent<CinderAddressTransaction, CinderAddressTransaction> query = AddressHashBaseQuery(addressHash);
+            long total = await query.Limit(queryCountLimiter).CountDocumentsAsync(cancellationToken).AnyContext();
+
+            query = sort switch
+            {
+                SortOrder.Ascending => query.SortBy(transaction => transaction.BlockNumber),
+                SortOrder.Descending => query.SortByDescending(transaction => transaction.BlockNumber),
+                _ => throw new NotImplementedException()
+            };
+
+            query = query.Skip((page.Value - 1) * size.Value).Limit(size.Value);
+
+            List<string> transactions =
+                await query.Project(document => document.Hash).ToListAsync(cancellationToken).AnyContext();
+
+            return new PagedEnumerable<string>(transactions, (int) total, page.Value, size.Value);
+        }
+
         public async Task<IEnumerable<string>> GetTransactionHashesByAddressHash(string addressHash, int? size = null,
             CancellationToken cancellationToken = default)
         {
@@ -64,37 +90,11 @@ namespace Cinder.Data.Repositories
             return transactions;
         }
 
-        public async Task<IPage<string>> GetPagedTransactionHashesByAddressHash(string addressHash, int? page = null,
-            int? size = null, SortOrder sort = SortOrder.Ascending, CancellationToken cancellationToken = default)
-        {
-            page ??= 1;
-            size ??= 10;
-
-            IFindFluent<CinderAddressTransaction, CinderAddressTransaction> query = AddressHashBaseQuery(addressHash);
-            // NOTE: Hard cap to 10k records to avoid performance issues, needs further investigation
-            long total = await query.Limit(10000).CountDocumentsAsync(cancellationToken).AnyContext();
-
-            query = sort switch
-            {
-                SortOrder.Ascending => query.SortBy(transaction => transaction.BlockNumber),
-                SortOrder.Descending => query.SortByDescending(transaction => transaction.BlockNumber),
-                _ => throw new System.NotImplementedException()
-            };
-
-            query = query.Skip((page.Value - 1) * size.Value).Limit(size.Value);
-
-            List<string> transactions =
-                await query.Project(document => document.Hash).ToListAsync(cancellationToken).AnyContext();
-
-            return new PagedEnumerable<string>(transactions, (int) total, page.Value, size.Value);
-        }
-
-        public async Task<ulong> GetTransactionCountByAddressHash(string addressHash,
+        public async Task<ulong> GetTransactionCountByAddressHash(string addressHash, int queryCountLimiter = 10000,
             CancellationToken cancellationToken = default)
         {
             IFindFluent<CinderAddressTransaction, CinderAddressTransaction> query = AddressHashBaseQuery(addressHash);
-            // NOTE: Hard cap to 10k records to avoid performance issues, needs further investigation
-            long total = await query.Limit(10000).CountDocumentsAsync(cancellationToken).AnyContext();
+            long total = await query.Limit(queryCountLimiter).CountDocumentsAsync(cancellationToken).AnyContext();
 
             return (ulong) total;
         }

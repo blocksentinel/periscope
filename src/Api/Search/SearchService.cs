@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Cinder.Data.Repositories;
-using Cinder.Extensions;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
 
-namespace Cinder.Api.Search
+namespace Periscope.Api.Search
 {
     public class SearchService : ISearchService
     {

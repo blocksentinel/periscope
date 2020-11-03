@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions
+namespace Periscope.Core.Extensions
 {
     public static class EnumerableExtensions
     {

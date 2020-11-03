@@ -1,4 +1,4 @@
-﻿namespace Cinder.Data.Repositories
+﻿namespace Periscope.Data.Repositories
 {
     public enum SortOrder
     {

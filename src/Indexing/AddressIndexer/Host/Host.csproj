@@ -6,8 +6,8 @@
     <LangVersion>latest</LangVersion>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
-    <AssemblyName>Cinder.Indexing.AddressIndexer.Host</AssemblyName>
-    <RootNamespace>Cinder.Indexing.AddressIndexer.Host</RootNamespace>
+    <AssemblyName>Periscope.Indexing.AddressIndexer.Host</AssemblyName>
+    <RootNamespace>Periscope.Indexing.AddressIndexer.Host</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

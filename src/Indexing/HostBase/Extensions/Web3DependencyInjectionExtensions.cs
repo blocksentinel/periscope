@@ -1,10 +1,9 @@
-﻿using Cinder.Core.SharedKernel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Nethereum.Web3;
+using Periscope.Core.SharedKernel;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Indexing.HostBase.Extensions
 {
     public static class Web3DependencyInjectionExtensions
     {

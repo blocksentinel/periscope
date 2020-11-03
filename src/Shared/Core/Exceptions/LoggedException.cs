@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cinder.Core.Exceptions
+namespace Periscope.Core.Exceptions
 {
     public class LoggedException : AggregateException
     {

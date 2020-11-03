@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Services
 {
     public interface INetInfoService
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Documents;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public interface IAddressMetaRepository
     {

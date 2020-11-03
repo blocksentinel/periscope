@@ -1,4 +1,4 @@
-﻿namespace Cinder.Data
+﻿namespace Periscope.Data
 {
     public interface IRepository { }
 }

@@ -1,4 +1,4 @@
-﻿namespace Cinder.Data.IndexBuilders
+﻿namespace Periscope.Data.IndexBuilders
 {
     public interface IIndexBuilder
     {

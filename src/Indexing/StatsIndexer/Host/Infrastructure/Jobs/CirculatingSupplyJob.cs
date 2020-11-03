@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cinder.Core.SharedKernel;
-using Cinder.Data.Repositories;
-using Cinder.Extensions;
-using Cinder.Stats;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Microsoft.Extensions.Logging;
+using Periscope.Core.Extensions;
+using Periscope.Core.SharedKernel;
+using Periscope.Data.Repositories;
+using Periscope.Stats;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
     public class CirculatingSupplyJob : JobBase
     {

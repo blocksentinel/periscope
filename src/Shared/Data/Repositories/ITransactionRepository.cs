@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Documents;
+using Periscope.Core.Paging;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public interface ITransactionRepository : Nethereum.BlockchainProcessing.BlockStorage.Repositories.ITransactionRepository
     {

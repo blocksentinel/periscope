@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Events;
-using Cinder.Extensions;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
 using Foundatio.Jobs;
 using Foundatio.Messaging;
 using Foundatio.Queues;
 using Microsoft.Extensions.Hosting;
+using Periscope.Core.Extensions;
+using Periscope.Events;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Jobs;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Hosting
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Hosting
 {
     public class StatsIndexerHost : BackgroundService
     {

@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Cinder.Data.Repositories;
-using Cinder.Extensions;
 using Microsoft.Extensions.Logging;
 using Nethereum.BlockchainProcessing.BlockStorage.BlockStorageStepsHandlers;
 using Nethereum.RPC.Eth.DTOs;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
 
-namespace Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
+namespace Periscope.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 {
     public class CinderContractCreationStorageStepHandler : ContractCreationStorageStepHandler
     {

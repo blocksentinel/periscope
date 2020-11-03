@@ -6,7 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
-namespace Cinder.Api.Application.Behaviors
+namespace Periscope.Api.Application.Behaviors
 {
     public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

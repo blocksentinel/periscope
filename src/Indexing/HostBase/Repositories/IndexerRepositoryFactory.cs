@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cinder.Core.SharedKernel;
-using Cinder.Data;
-using Cinder.Data.IndexBuilders;
-using Cinder.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Periscope.Core.Extensions;
+using Periscope.Core.SharedKernel;
+using Periscope.Data;
+using Periscope.Data.Extensions;
+using Periscope.Data.IndexBuilders;
 
-namespace Cinder.Indexing.HostBase.Repositories
+namespace Periscope.Indexing.HostBase.Repositories
 {
     public class IndexerRepositoryFactory : RepositoryFactoryBase, IIndexerRepositoryFactory
     {

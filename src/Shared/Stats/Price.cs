@@ -1,4 +1,4 @@
-﻿namespace Cinder.Stats
+﻿namespace Periscope.Stats
 {
     public class Price
     {

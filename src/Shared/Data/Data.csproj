@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>Cinder.Data</AssemblyName>
-    <RootNamespace>Cinder.Data</RootNamespace>
+    <AssemblyName>Periscope.Data</AssemblyName>
+    <RootNamespace>Periscope.Data</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

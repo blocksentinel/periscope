@@ -1,4 +1,4 @@
-﻿namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
+﻿namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Jobs
 {
     public class AddressTransactedWorkItem
     {

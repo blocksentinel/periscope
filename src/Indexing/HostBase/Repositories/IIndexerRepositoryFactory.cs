@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Cinder.Data;
 using MongoDB.Driver;
+using Periscope.Data;
 
-namespace Cinder.Indexing.HostBase.Repositories
+namespace Periscope.Indexing.HostBase.Repositories
 {
     public interface IIndexerRepositoryFactory : IRepositoryFactory
     {

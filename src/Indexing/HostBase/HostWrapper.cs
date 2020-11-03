@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cinder.Core;
-using Cinder.Core.Exceptions;
-using Cinder.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Periscope.Core;
+using Periscope.Core.Exceptions;
+using Periscope.Core.Extensions;
 using Serilog;
 
-namespace Cinder.Indexing.HostBase
+namespace Periscope.Indexing.HostBase
 {
     public class HostWrapper
     {

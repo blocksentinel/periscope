@@ -1,7 +1,4 @@
-﻿using Cinder.Data;
-
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions
+﻿namespace Periscope.Data.Extensions
 {
     public static class CollectionNameExtensions
     {

@@ -1,4 +1,4 @@
-﻿namespace Cinder.Core.SharedKernel
+﻿namespace Periscope.Core.SharedKernel
 {
     public static class CacheScopes
     {

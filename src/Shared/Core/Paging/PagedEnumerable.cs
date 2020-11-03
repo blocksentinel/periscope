@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cinder.Core.Paging
+namespace Periscope.Core.Paging
 {
     public class PagedEnumerable<T> : IPage<T>
     {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Documents;
-using Cinder.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Periscope.Core.Extensions;
+using Periscope.Core.Paging;
+using Periscope.Documents;
 
-namespace Cinder.Data.Repositories
+namespace Periscope.Data.Repositories
 {
     public class AddressRepository : RepositoryBase<CinderAddress>, IAddressRepository
     {
@@ -83,15 +83,18 @@ namespace Cinder.Data.Repositories
             return staleAddresses;
         }
 
-        public async Task<IPage<CinderAddress>> GetRichest(int? page, int? size, CancellationToken cancellationToken = default)
+        public async Task<IPage<CinderAddress>> GetRichest(int? page, int? size, int minimumBalance = 0,
+            int queryCountLimiter = 10000, CancellationToken cancellationToken = default)
         {
-            IFindFluent<CinderAddress, CinderAddress> query = Collection.Find(FilterDefinition<CinderAddress>.Empty)
-                .Skip(((page ?? 1) - 1) * (size ?? 10))
-                .Limit(size ?? 10)
-                .SortByDescending(document => document.Balance);
+            IFindFluent<CinderAddress, CinderAddress> query =
+                Collection.Find(Builders<CinderAddress>.Filter.Where(document => document.Balance > minimumBalance));
+            long total = await query.Limit(queryCountLimiter).CountDocumentsAsync(cancellationToken).AnyContext();
+
+            query = query.Skip(((page ?? 1) - 1) * (size ?? 10)).Limit(size ?? 10).SortByDescending(document => document.Balance);
+
             List<CinderAddress> addresses = await query.ToListAsync(cancellationToken).AnyContext();
 
-            return new PagedEnumerable<CinderAddress>(addresses, 1000, page ?? 1, size ?? 10);
+            return new PagedEnumerable<CinderAddress>(addresses, (int) total, page ?? 1, size ?? 10);
         }
 
         public async Task<decimal> GetSupply(CancellationToken cancellationToken = default)

@@ -1,4 +1,4 @@
-﻿namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
+﻿namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
     public class NetInfoWorkItem
     {

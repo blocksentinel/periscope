@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cinder.Extensions;
 using Foundatio.Caching;
 using Nethereum.Web3;
+using Periscope.Core.Extensions;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Services
 {
     public class NetInfoService : INetInfoService
     {

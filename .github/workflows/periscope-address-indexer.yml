@@ -1,10 +1,10 @@
-name: Cinder Block Indexer
+name: Periscope Address Indexer
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
+    # Publish `main` as Docker `latest` image.
     branches:
-      - master
+      - main
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -14,8 +14,8 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: cinder-block-indexer
-  DOCKER_FILE: src/Indexing/BlockIndexer/Host/Dockerfile
+  IMAGE_NAME: periscope-address-indexer
+  DOCKER_FILE: src/Indexing/AddressIndexer/Host/Dockerfile
 
 jobs:
   # Run tests.
@@ -67,7 +67,7 @@ jobs:
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION

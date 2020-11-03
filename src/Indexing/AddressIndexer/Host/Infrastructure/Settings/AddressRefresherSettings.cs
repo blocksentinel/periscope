@@ -1,4 +1,4 @@
-﻿namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Settings
+﻿namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Settings
 {
     public class AddressRefresherSettings
     {

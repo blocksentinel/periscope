@@ -1,8 +1,7 @@
-﻿using Cinder.Api.Search;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Periscope.Api.Search;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Api.Host.Extensions
 {
     public static class SearchDependencyInjectionExtensions
     {

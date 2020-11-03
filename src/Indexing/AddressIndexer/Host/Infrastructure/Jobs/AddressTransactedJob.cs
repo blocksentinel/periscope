@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cinder.Data.Repositories;
-using Cinder.Documents;
-using Cinder.Extensions;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Foundatio.Queues;
 using Microsoft.Extensions.Logging;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
+using Periscope.Documents;
 
-namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
+namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Jobs
 {
     public class AddressTransactedJob : QueueJobBase<AddressTransactedWorkItem>
     {

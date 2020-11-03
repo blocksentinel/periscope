@@ -1,8 +1,7 @@
-﻿using Cinder.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Periscope.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Indexing.BlockIndexer.Host.Infrastructure.Extensions
 {
     public static class BlockchainDependencyInjectionExtensions
     {

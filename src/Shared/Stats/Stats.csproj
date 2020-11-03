@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Cinder.Stats</AssemblyName>
-    <RootNamespace>Cinder.Stats</RootNamespace>
+    <AssemblyName>Periscope.Stats</AssemblyName>
+    <RootNamespace>Periscope.Stats</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

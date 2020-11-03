@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cinder.Core.SharedKernel;
-using Cinder.Data.Repositories;
-using Cinder.Documents;
-using Cinder.Extensions;
-using Cinder.Indexing.AddressIndexer.Host.Infrastructure.Settings;
-using Cinder.Stats;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Microsoft.Extensions.Logging;
@@ -16,8 +10,14 @@ using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Util;
 using Nethereum.Web3;
+using Periscope.Core.Extensions;
+using Periscope.Core.SharedKernel;
+using Periscope.Data.Repositories;
+using Periscope.Documents;
+using Periscope.Indexing.AddressIndexer.Host.Infrastructure.Settings;
+using Periscope.Stats;
 
-namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs
+namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Jobs
 {
     public class AddressRefresherJob : JobBase
     {

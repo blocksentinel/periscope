@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.SharedKernel;
-using Cinder.Extensions;
-using Cinder.Stats;
 using Foundatio.Caching;
 using MediatR;
+using Periscope.Core.Extensions;
+using Periscope.Core.SharedKernel;
+using Periscope.Stats;
 
-namespace Cinder.Api.Application.Features.Stats
+namespace Periscope.Api.Application.Features.Stats
 {
     public class GetPrice
     {

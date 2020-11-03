@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Api.Search;
-using Cinder.Extensions;
 using FluentValidation;
 using MediatR;
+using Periscope.Api.Search;
+using Periscope.Core.Extensions;
 
-namespace Cinder.Api.Application.Features.Search
+namespace Periscope.Api.Application.Features.Search
 {
     public class GetResultsByQuery
     {

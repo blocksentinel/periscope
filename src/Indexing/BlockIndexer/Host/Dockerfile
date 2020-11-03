@@ -22,4 +22,4 @@ RUN dotnet publish "Host.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Cinder.Indexing.BlockIndexer.Host.dll"]
+ENTRYPOINT ["dotnet", "Periscope.Indexing.BlockIndexer.Host.dll"]

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cinder.Core.SharedKernel;
-using Cinder.Extensions;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Services;
-using Cinder.Stats;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Foundatio.Queues;
 using Microsoft.Extensions.Logging;
+using Periscope.Core.Extensions;
+using Periscope.Core.SharedKernel;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Services;
+using Periscope.Stats;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
     public class NetInfoJob : QueueJobBase<NetInfoWorkItem>
     {

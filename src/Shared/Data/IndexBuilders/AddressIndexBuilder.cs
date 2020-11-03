@@ -1,7 +1,7 @@
-﻿using Cinder.Documents;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
+using Periscope.Documents;
 
-namespace Cinder.Data.IndexBuilders
+namespace Periscope.Data.IndexBuilders
 {
     public class AddressIndexBuilder : BaseIndexBuilder<CinderAddress>
     {

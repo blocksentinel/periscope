@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cinder.Core.SharedKernel;
-using Cinder.Extensions;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Requests;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Responses;
-using Cinder.Stats;
 using Foundatio.Caching;
 using Foundatio.Jobs;
 using Microsoft.Extensions.Logging;
+using Periscope.Core.Extensions;
+using Periscope.Core.SharedKernel;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Requests;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko.Responses;
+using Periscope.Stats;
 
-namespace Cinder.Indexing.StatsIndexer.Host.Infrastructure.Jobs
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Jobs
 {
     public class PriceJob : JobBase
     {

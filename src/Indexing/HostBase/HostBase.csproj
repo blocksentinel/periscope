@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Cinder.Indexing.HostBase</AssemblyName>
-    <RootNamespace>Cinder.Indexing.HostBase</RootNamespace>
+    <AssemblyName>Periscope.Indexing.HostBase</AssemblyName>
+    <RootNamespace>Periscope.Indexing.HostBase</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

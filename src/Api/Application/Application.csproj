@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>Cinder.Api.Application</AssemblyName>
-    <RootNamespace>Cinder.Api.Application</RootNamespace>
+    <AssemblyName>Periscope.Api.Application</AssemblyName>
+    <RootNamespace>Periscope.Api.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Cinder.Api.Application.Features.Stats;
-using Cinder.Core.Paging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Periscope.Api.Application.Features.Stats;
+using Periscope.Core.Paging;
 
-namespace Cinder.Api.Host.Controllers
+namespace Periscope.Api.Host.Controllers
 {
     public class StatsController : BaseController
     {

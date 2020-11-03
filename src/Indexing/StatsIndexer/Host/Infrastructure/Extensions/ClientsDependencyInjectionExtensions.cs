@@ -1,10 +1,9 @@
 ﻿using System;
-using Cinder.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
 using Microsoft.Extensions.DependencyInjection;
+using Periscope.Indexing.StatsIndexer.Host.Infrastructure.Clients.CoinGecko;
 using Refit;
 
-// ReSharper disable once CheckNamespace
-namespace Cinder.Extensions.DependencyInjection
+namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Extensions
 {
     public static class ClientDependencyInjectionExtensions
     {

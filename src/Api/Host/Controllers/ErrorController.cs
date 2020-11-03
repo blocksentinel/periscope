@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Cinder.Api.Host.Controllers
+namespace Periscope.Api.Host.Controllers
 {
     [ApiController]
     [Produces("application/json")]

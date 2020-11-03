@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Data.Repositories;
-using Cinder.Events;
-using Cinder.Extensions;
-using Cinder.Indexing.AddressIndexer.Host.Infrastructure.Jobs;
 using Foundatio.Jobs;
 using Foundatio.Messaging;
 using Foundatio.Queues;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Periscope.Core.Extensions;
+using Periscope.Data.Repositories;
+using Periscope.Events;
+using Periscope.Indexing.AddressIndexer.Host.Infrastructure.Jobs;
 
-namespace Cinder.Indexing.AddressIndexer.Host.Infrastructure.Hosting
+namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Hosting
 {
     public class AddressIndexerHost : BackgroundService
     {

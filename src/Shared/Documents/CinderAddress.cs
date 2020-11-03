@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nethereum.BlockchainProcessing.BlockStorage.Entities;
 
-namespace Cinder.Documents
+namespace Periscope.Documents
 {
     public class CinderAddress : TableRow, IDocument
     {

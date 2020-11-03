@@ -3,14 +3,16 @@ using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Cinder.Core.Paging;
-using Cinder.Data.Repositories;
-using Cinder.Documents;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Options;
 using Nethereum.Util;
+using Periscope.Core.Paging;
+using Periscope.Core.SharedKernel;
+using Periscope.Data.Repositories;
+using Periscope.Documents;
 
-namespace Cinder.Api.Application.Features.Transaction
+namespace Periscope.Api.Application.Features.Transaction
 {
     public class GetTransactionsByAddressHash
     {
@@ -56,20 +58,22 @@ namespace Cinder.Api.Application.Features.Transaction
         public class Handler : IRequestHandler<Query, IPage<Model>>
         {
             private readonly IAddressTransactionRepository _addressTransactionRepository;
+            private readonly ISettings _settings;
             private readonly ITransactionRepository _transactionRepository;
 
             public Handler(IAddressTransactionRepository addressTransactionRepository,
-                ITransactionRepository transactionRepository)
+                ITransactionRepository transactionRepository, IOptions<Settings> options)
             {
                 _addressTransactionRepository = addressTransactionRepository;
                 _transactionRepository = transactionRepository;
+                _settings = options.Value;
             }
 
             public async Task<IPage<Model>> Handle(Query request, CancellationToken cancellationToken)
             {
-                IPage<string> transactionHashes =
-                    await _addressTransactionRepository.GetPagedTransactionHashesByAddressHash(request.AddressHash, request.Page,
-                        request.Size, request.Sort, cancellationToken);
+                IPage<string> transactionHashes = await _addressTransactionRepository.GetPagedTransactionHashesByAddressHash(
+                    request.AddressHash, request.Page, request.Size, request.Sort, _settings.Performance.QueryCountLimiter,
+                    cancellationToken);
 
                 IEnumerable<CinderTransaction> transactions =
                     await _transactionRepository.GetTransactionsByHashes(transactionHashes.Items, cancellationToken);

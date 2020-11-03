@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Cinder.Api.Search
+namespace Periscope.Api.Search
 {
     public interface ISearchService
     {
