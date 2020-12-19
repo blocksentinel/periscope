@@ -5,7 +5,7 @@ namespace Periscope.Core
 {
     public static class VersionInfo
     {
-        public const string Version = "1.9.0-beta.1";
+        public const string Version = "1.9.0-beta.2";
         public static DateTime BuildDate => new FileInfo(typeof(VersionInfo).Assembly.Location).LastWriteTime;
     }
 }
