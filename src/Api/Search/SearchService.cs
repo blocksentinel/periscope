@@ -22,7 +22,7 @@ namespace Periscope.Api.Search
         public async Task<SearchResult> ExecuteSearch(string input)
         {
             string query = Regex.Replace(input ?? "", @"\s+", "");
-            SearchResult searchResult = new SearchResult();
+            SearchResult searchResult = new();
 
             if (Regex.IsMatch(query, "^(0x)?[0-9a-f]{40}$", RegexOptions.IgnoreCase))
             {

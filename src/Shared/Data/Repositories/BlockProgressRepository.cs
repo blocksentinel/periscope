@@ -13,7 +13,7 @@ namespace Periscope.Data.Repositories
 
         public Task UpsertProgressAsync(BigInteger blockNumber)
         {
-            CinderBlockProgress block = new CinderBlockProgress {LastBlockProcessed = blockNumber.ToString()};
+            CinderBlockProgress block = new() {LastBlockProcessed = blockNumber.ToString()};
             block.UpdateRowDates();
             return UpsertDocumentAsync(block);
         }

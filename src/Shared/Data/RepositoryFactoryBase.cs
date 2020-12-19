@@ -18,7 +18,7 @@ namespace Periscope.Data
         protected RepositoryFactoryBase(string connectionString, string dbTag)
         {
             DatabaseName = "cinder" + dbTag;
-            MongoUrl url = new MongoUrl(connectionString);
+            MongoUrl url = new(connectionString);
             Client = new MongoClient(new MongoClientSettings
             {
                 Server = new MongoServerAddress(url.Server.Host, url.Server.Port),

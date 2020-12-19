@@ -32,7 +32,7 @@ namespace Periscope.Indexing.StatsIndexer.Host.Infrastructure.Services
 
             if (timestamps.Count > 50)
             {
-                List<long> differences = new List<long>();
+                List<long> differences = new();
                 int previousIndex = 0;
                 for (int i = 0; i < timestamps.Count; i++)
                 {

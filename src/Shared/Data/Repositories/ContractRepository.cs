@@ -12,8 +12,7 @@ namespace Periscope.Data.Repositories
 {
     public class ContractRepository : RepositoryBase<CinderContract>, IContractRepository
     {
-        private readonly ConcurrentDictionary<string, CinderContract> _cachedContracts =
-            new ConcurrentDictionary<string, CinderContract>();
+        private readonly ConcurrentDictionary<string, CinderContract> _cachedContracts = new();
 
         public ContractRepository(IMongoClient client, string databaseName) :
             base(client, databaseName, CollectionName.Contracts) { }

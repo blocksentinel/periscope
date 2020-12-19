@@ -13,7 +13,7 @@ namespace Periscope.Events
 
         public static BlockFoundEvent Create(BlockWithTransactions block)
         {
-            return new BlockFoundEvent
+            return new()
             {
                 BlockNumber = block.Number.ToUlong(),
                 Difficulty = block.Difficulty.ToUlong(),

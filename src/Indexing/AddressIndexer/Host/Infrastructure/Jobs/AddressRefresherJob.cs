@@ -50,7 +50,7 @@ namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Jobs
                 IEnumerable<CinderAddress> enumerable = addresses as CinderAddress[] ?? addresses.ToArray();
                 _logger.LogDebug("Found {Count} addresses to update", enumerable.Count());
 
-                List<CinderAddress> updated = new List<CinderAddress>();
+                List<CinderAddress> updated = new();
                 foreach (CinderAddress address in enumerable)
                 {
                     _logger.LogDebug("Updating stats for {Hash}", address.Hash);

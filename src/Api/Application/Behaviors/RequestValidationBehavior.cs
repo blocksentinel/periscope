@@ -21,7 +21,7 @@ namespace Periscope.Api.Application.Behaviors
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-            ValidationContext<TRequest> context = new ValidationContext<TRequest>(request);
+            ValidationContext<TRequest> context = new(request);
 
             List<ValidationFailure> failures = _validators.Select(v => v.Validate(context))
                 .SelectMany(result => result.Errors)

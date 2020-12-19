@@ -31,7 +31,7 @@ namespace Periscope.Indexing.BlockIndexer.Host.Infrastructure.StepsHandlers
 
             await _bus.PublishAsync(BlockFoundEvent.Create(value)).AnyContext();
 
-            List<string> addresses = new List<string> {value.Miner};
+            List<string> addresses = new() {value.Miner};
             addresses.AddRange(value.Transactions.Select(transaction => transaction.From));
             addresses.AddRange(value.Transactions.Select(transaction => transaction.To));
 

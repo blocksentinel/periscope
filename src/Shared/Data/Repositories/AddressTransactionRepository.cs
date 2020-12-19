@@ -44,7 +44,7 @@ namespace Periscope.Data.Repositories
                 .DistinctAsync(field => field.Address, new BsonDocument(), cancellationToken: cancellationToken)
                 .AnyContext();
 
-            List<string> records = new List<string>();
+            List<string> records = new();
             while (await t.MoveNextAsync(cancellationToken).AnyContext()) records.AddRange(t.Current);
 
             return records;

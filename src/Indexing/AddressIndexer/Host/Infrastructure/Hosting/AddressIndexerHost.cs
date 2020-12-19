@@ -32,7 +32,7 @@ namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Hosting
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            List<Task> tasks = new List<Task>
+            List<Task> tasks = new()
             {
                 _bus.SubscribeAsync<AddressesTransactedEvent>(async @event =>
                 {

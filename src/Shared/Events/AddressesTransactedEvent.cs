@@ -6,7 +6,7 @@
 
         public static AddressesTransactedEvent Create(string[] addresses)
         {
-            return new AddressesTransactedEvent {Addresses = addresses};
+            return new() {Addresses = addresses};
         }
     }
 }
