@@ -62,6 +62,9 @@ namespace Periscope.Indexing.HostBase.Repositories
                     case CollectionName.TransactionLogs:
                         builder = new TransactionLogIndexBuilder(db);
                         break;
+                    case CollectionName.Promotion:
+                        builder = new PromotionIndexBuilder(db);
+                        break;
                     default:
                         continue;
                 }

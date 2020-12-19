@@ -12,24 +12,26 @@ namespace Periscope.Api.Host.Extensions
         {
             services.AddSingleton(sp =>
             {
-                IOptions<Settings> options = sp.GetService<IOptions<Settings>>();
+                IOptions<Settings> options = sp.GetRequiredService<IOptions<Settings>>();
 
                 return ApiRepositoryFactory.Create(options.Value.Database);
             });
             services.AddSingleton<IAddressRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<AddressRepository>());
             services.AddSingleton<IAddressTransactionRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
             services.AddSingleton<IBlockRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<BlockRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<BlockRepository>());
             services.AddSingleton<IContractRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<ContractRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<ContractRepository>());
             services.AddSingleton<ITransactionLogRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<TransactionLogRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<TransactionLogRepository>());
             services.AddSingleton<ITransactionRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<TransactionRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<TransactionRepository>());
             services.AddSingleton<IAddressMetaRepository>(sp =>
-                sp.GetService<IApiRepositoryFactory>().CreateRepository<AddressMetaRepository>());
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<AddressMetaRepository>());
+            services.AddSingleton<IPromotionRepository>(sp =>
+                sp.GetRequiredService<IApiRepositoryFactory>().CreateRepository<PromotionRepository>());
         }
     }
 }

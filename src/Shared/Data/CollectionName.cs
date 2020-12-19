@@ -9,6 +9,7 @@
         TransactionLogs,
         Contracts,
         BlockProgress,
-        AddressMeta
+        AddressMeta,
+        Promotion
     }
 }

@@ -40,6 +40,7 @@ namespace Periscope.Data
                 var t when t == typeof(TransactionLogRepository) => new TransactionLogRepository(Client, DatabaseName),
                 var t when t == typeof(TransactionRepository) => new TransactionRepository(Client, DatabaseName),
                 var t when t == typeof(AddressMetaRepository) => new AddressMetaRepository(Client, DatabaseName),
+                var t when t == typeof(PromotionRepository) => new PromotionRepository(Client, DatabaseName),
                 _ => throw new NotImplementedException($"Repository not implemented for type {typeof(TRepository).Name}")
             };
 
@@ -75,6 +76,7 @@ namespace Periscope.Data
             });
             BsonClassMap.RegisterClassMap<CinderBlockProgress>();
             BsonClassMap.RegisterClassMap<CinderAddressMeta>();
+            BsonClassMap.RegisterClassMap<Promotion>();
         }
     }
 }

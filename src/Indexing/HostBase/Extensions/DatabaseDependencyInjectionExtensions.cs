@@ -12,26 +12,28 @@ namespace Periscope.Indexing.HostBase.Extensions
         {
             services.AddSingleton(sp =>
             {
-                IOptions<Settings> options = sp.GetService<IOptions<Settings>>();
+                IOptions<Settings> options = sp.GetRequiredService<IOptions<Settings>>();
 
                 return IndexerRepositoryFactory.Create(options.Value.Database);
             });
             services.AddSingleton<IAddressRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<AddressRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<AddressRepository>());
             services.AddSingleton<IAddressTransactionRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<AddressTransactionRepository>());
             services.AddSingleton<IBlockRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<BlockRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<BlockRepository>());
             services.AddSingleton<IBlockProgressRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<BlockProgressRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<BlockProgressRepository>());
             services.AddSingleton<IContractRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<ContractRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<ContractRepository>());
             services.AddSingleton<ITransactionLogRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<TransactionLogRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<TransactionLogRepository>());
             services.AddSingleton<ITransactionRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<TransactionRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<TransactionRepository>());
             services.AddSingleton<IAddressMetaRepository>(sp =>
-                sp.GetService<IIndexerRepositoryFactory>().CreateRepository<AddressMetaRepository>());
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<AddressMetaRepository>());
+            services.AddSingleton<IPromotionRepository>(sp =>
+                sp.GetRequiredService<IIndexerRepositoryFactory>().CreateRepository<PromotionRepository>());
         }
     }
 }
