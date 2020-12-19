@@ -9,7 +9,7 @@ namespace Periscope.Data.Repositories
     public class PromotionRepository : RepositoryBase<Promotion>, IPromotionRepository
     {
         public PromotionRepository(IMongoClient client, string databaseName) : base(client, databaseName,
-            CollectionName.Promotion) { }
+            CollectionName.Promotions) { }
 
         public async Task<IEnumerable<Promotion>> GetPromotions(bool includeInactive = false,
             CancellationToken cancellationToken = default)

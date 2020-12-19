@@ -5,7 +5,7 @@ namespace Periscope.Data.IndexBuilders
 {
     public class PromotionIndexBuilder : BaseIndexBuilder<Promotion>
     {
-        public PromotionIndexBuilder(IMongoDatabase db) : base(db, CollectionName.Promotion) { }
+        public PromotionIndexBuilder(IMongoDatabase db) : base(db, CollectionName.Promotions) { }
 
         public override void EnsureIndexes()
         {

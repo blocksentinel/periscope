@@ -10,6 +10,6 @@
         Contracts,
         BlockProgress,
         AddressMeta,
-        Promotion
+        Promotions
     }
 }
