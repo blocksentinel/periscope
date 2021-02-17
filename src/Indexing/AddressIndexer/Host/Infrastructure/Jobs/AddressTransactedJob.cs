@@ -26,6 +26,11 @@ namespace Periscope.Indexing.AddressIndexer.Host.Infrastructure.Jobs
         {
             string address = context.QueueEntry.Value.Address;
 
+            if (string.IsNullOrEmpty(address))
+            {
+                return JobResult.SuccessWithMessage("Address was empty (maybe a contract deployment?), skipping");
+            }
+
             if (await _addressCache.ExistsAsync(address).AnyContext())
             {
                 return JobResult.SuccessWithMessage($"Address {address} exists in cache, skipping");
