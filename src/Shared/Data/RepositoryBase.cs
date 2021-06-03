@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -19,7 +20,8 @@ namespace Periscope.Data
         {
             Client = client;
             Database = Client.GetDatabase(databaseName);
-            Collection = Database.GetCollection<TDocument>(collectionName.ToCollectionName());
+            Collection = Database.GetCollection<TDocument>(collectionName.ToCollectionName(),
+                new MongoCollectionSettings {ReadEncoding = new UTF8Encoding(false, false)});
         }
 
         protected virtual FilterDefinition<TDocument> CreateDocumentFilter(string id)

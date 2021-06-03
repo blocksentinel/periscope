@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using System.Text;
+using MongoDB.Driver;
 using Periscope.Data.Extensions;
 using Periscope.Documents;
 
@@ -10,7 +11,8 @@ namespace Periscope.Data.IndexBuilders
 
         protected BaseIndexBuilder(IMongoDatabase db, CollectionName collectionName)
         {
-            Collection = db.GetCollection<TDocument>(collectionName.ToCollectionName());
+            Collection = db.GetCollection<TDocument>(collectionName.ToCollectionName(),
+                new MongoCollectionSettings {ReadEncoding = new UTF8Encoding(false, false)});
         }
 
         public abstract void EnsureIndexes();
