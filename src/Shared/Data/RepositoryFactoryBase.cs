@@ -19,11 +19,7 @@ namespace Periscope.Data
         {
             DatabaseName = "cinder" + dbTag;
             MongoUrl url = new(connectionString);
-            Client = new MongoClient(new MongoClientSettings
-            {
-                Server = new MongoServerAddress(url.Server.Host, url.Server.Port),
-                ReadEncoding = new UTF8Encoding(false, false)
-            });
+            Client = new MongoClient(url) {Settings = {ReadEncoding = new UTF8Encoding(false, false)}};
 
             CreateMaps();
         }
