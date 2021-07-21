@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<AssemblyName>Periscope.Insulation</AssemblyName>
+	<RootNamespace>Periscope.Insulation</RootNamespace>
+	<LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Foundatio.Extensions.Hosting" Version="10.0.2" />
+    <PackageReference Include="Foundatio.RabbitMQ" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="5.0.3" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="6.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Periscope.Core\Periscope.Core.csproj" />
+  </ItemGroup>
+
+</Project>

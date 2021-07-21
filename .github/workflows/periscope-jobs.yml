@@ -1,4 +1,4 @@
-name: Periscope API
+name: Periscope Jobs
 
 on:
   push:
@@ -14,8 +14,8 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: periscope-api
-  DOCKER_FILE: src/Periscope.Api/Dockerfile
+  IMAGE_NAME: periscope-jobs
+  DOCKER_FILE: src/Periscope.Jobs/Dockerfile
 
 jobs:
   # Run tests.
